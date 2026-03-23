@@ -22,7 +22,6 @@ app = FastAPI(
 app.add_middleware(SessionMiddleware, secret_key="dev-session-secret-change-me")
 
 static_dir = BASE_DIR / "static"
-static_dir.mkdir(exist_ok=True)
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 Base.metadata.create_all(bind=engine)
