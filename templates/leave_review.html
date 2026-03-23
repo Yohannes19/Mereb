@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Leave a Review for {{ profile.display_name }} | ProofPage{% endblock %}
+{% block body %}
+<!-- Ambient Dynamic Background -->
+<div class="ambient-bg" style="background: #FAFAFC;">
+    <div class="ambient-orb ambient-orb-1" style="opacity: 0.25;"></div>
+    <div class="ambient-orb ambient-orb-2" style="opacity: 0.15;"></div>
+</div>
+
+<main class="min-vh-100 d-flex flex-column justify-content-center py-5 position-relative">
+    <div class="position-absolute p-3 p-md-4 z-3" style="top: 0; right: 0;">
+        <button class="btn btn-sm btn-white rounded-pill px-3 shadow-sm lang-toggle-btn border" onclick="toggleLanguage()" style="font-size: 0.85rem; font-weight: bold;">🇪🇹 አማርኛ</button>
+    </div>
+    <div class="container" style="max-width: 650px;">
+        
+        <div class="text-center mb-5 fade-in-up stagger-1">
+            <a class="d-inline-flex align-items-center gap-2 text-decoration-none mb-4" href="/">
+                <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">M</div>
+                <span class="fs-6 fw-bold text-dark">Mereb</span>
+            </a>
+            <h1 class="display-6 fw-bold mb-2 lang-text" data-en="Leave a Testimonial" data-am="አስተያየት ይተዉ">Leave a Testimonial</h1>
+            <p class="text-muted fs-5 lang-text" data-en="For <span style='color: var(--pp-brand-1); font-weight: 600;'>{{ profile.display_name }}</span>" data-am="ለ <span style='color: var(--pp-brand-1); font-weight: 600;'>{{ profile.display_name }}</span>">For <span style="color: var(--pp-brand-1); font-weight: 600;">{{ profile.display_name }}</span></p>
+        </div>
+
+        <div class="glass-card p-4 p-md-5 mb-4 fade-in-up stagger-2">
+            
+            {% if request.query_params.get("success") == "1" %}
+            <div class="text-center py-4">
+                <div class="mb-4" style="font-size: 4rem;">🎉</div>
+                <h2 class="h3 fw-bold mb-3 lang-text" data-en="Thank you!" data-am="እናመሰግናለን!">Thank you!</h2>
+                <p class="text-muted mb-4 fs-5 lang-text" data-en="Your testimonial has been submitted successfully and will now appear on {{ profile.display_name }}'s public portfolio." data-am="አስተያየትዎ በተሳካ ሁኔታ ገብቷል፣ አሁን በ {{ profile.display_name }} የህዝብ ፖርትፎሊዮ ላይ ይታያል።">Your testimonial has been submitted successfully and will now appear on {{ profile.display_name }}'s public portfolio.</p>
+                <a href="/p/{{ profile.slug }}" class="btn btn-primary rounded-pill px-5 shadow-sm lang-text" data-en="View Portfolio" data-am="ፖርትፎሊዮ እይ">View Portfolio</a>
+            </div>
+            {% else %}
+            
+            <form method="post" action="/p/{{ profile.slug }}/review">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold lang-text" data-en="Your Full Name" data-am="ሙሉ ስምዎ">Your Full Name</label>
+                        <input name="reviewer_name" type="text" class="form-control form-control-lg" required placeholder="e.g. John Doe">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold lang-text" data-en="Your Role / Company" data-am="የእርስዎ ሚና / የድርጅት ስም">Your Role / Company</label>
+                        <input name="reviewer_role" type="text" class="form-control form-control-lg" placeholder="e.g. CEO, Acme Corp">
+                    </div>
+                    
+                    <div class="col-12 text-center my-4">
+                        <label class="form-label fw-bold d-block mb-3 fs-5 lang-text" data-en="Rate your experience" data-am="አገልግሎቱን ደረጃ ይስጡት">Rate your experience</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="stars" id="star1" value="1">
+                            <label class="btn btn-outline-light text-dark fs-4" for="star1">1 ⭐</label>
+                            
+                            <input type="radio" class="btn-check" name="stars" id="star2" value="2">
+                            <label class="btn btn-outline-light text-dark fs-4" for="star2">2 ⭐</label>
+                            
+                            <input type="radio" class="btn-check" name="stars" id="star3" value="3">
+                            <label class="btn btn-outline-light text-dark fs-4" for="star3">3 ⭐</label>
+                            
+                            <input type="radio" class="btn-check" name="stars" id="star4" value="4">
+                            <label class="btn btn-outline-light text-dark fs-4" for="star4">4 ⭐</label>
+                            
+                            <input type="radio" class="btn-check" name="stars" id="star5" value="5" checked>
+                            <label class="btn btn-outline-light text-dark fs-4" for="star5">5 ⭐</label>
+                        </div>
+                        <style>
+                            .btn-check:checked + .btn-outline-light {
+                                background: var(--pp-gradient-main) !important;
+                                color: var(--pp-ink-dark) !important;
+                                border-color: transparent !important;
+                                box-shadow: var(--pp-shadow-md);
+                            }
+                            .btn-outline-light {
+                                border: 1px solid var(--pp-border-strong);
+                                transition: all 0.2s ease;
+                            }
+                            .btn-outline-light:hover {
+                                background: rgba(0,0,0,0.03);
+                            }
+                        </style>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label fw-semibold lang-text" data-en="Your Testimonial" data-am="የእርስዎ ምስክርነት">Your Testimonial</label>
+                        <textarea name="testimonial" rows="5" class="form-control form-control-lg fs-5 fst-italic" required placeholder='"Working with them was an absolute gamechanger. They delivered exactly what we needed on time..."'></textarea>
+                    </div>
+                </div>
+
+                <div class="mt-5 text-center">
+                    <button type="submit" class="btn btn-primary btn-lg px-5 shadow-lg w-100 lang-text" style="border-radius: var(--pp-rad-pill);" data-en="Submit Review" data-am="አስተያየት አስገባ">Submit Review</button>
+                    <p class="text-muted small mt-3 lang-text" data-en="By submitting, you agree to allow {{ profile.display_name }} to display this quote publicly." data-am="ይህንን በማስገባትዎ፣ {{ profile.display_name }} ይህን አስተያየት በአደባባይ እንዲያሳዩት ተስማምተዋል ማለት ነው።">By submitting, you agree to allow {{ profile.display_name }} to display this quote publicly.</p>
+                </div>
+            </form>
+            {% endif %}
+        </div>
+        
+    </div>
+</main>
+{% endblock %}

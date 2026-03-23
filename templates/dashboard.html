@@ -10,27 +10,43 @@
 <div class="min-vh-100 d-flex flex-column fade-in-up stagger-1">
     <!-- Floating App Header -->
     <header class="pt-3 px-3 w-100 z-3">
-        <div class="container-fluid max-w-7xl mx-auto glass-card d-flex align-items-center justify-content-between px-4 py-3" style="border-radius: var(--pp-rad-pill);">
+        <div class="container-fluid max-w-7xl mx-auto glass-card d-flex align-items-center justify-content-between px-4 py-3"
+            style="border-radius: var(--pp-rad-pill);">
             <div class="d-flex align-items-center gap-3">
                 <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">P</div>
-                    <span class="fs-5 fw-bold d-none d-sm-block" style="color: var(--pp-ink-dark); letter-spacing: -0.02em;">ProofPage</span>
+                    <div class="brand-logomark"
+                        style="background: var(--pp-gradient-main); width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">
+                        M</div>
+                    <span class="fs-5 fw-bold d-none d-sm-block"
+                        style="color: var(--pp-ink-dark); letter-spacing: -0.02em;">Mereb</span>
                 </a>
                 <div class="px-3" style="border-left: 2px solid var(--pp-border-strong);">
-                    <span class="small fw-semibold text-muted d-none d-md-block">Workspace / <span style="color: var(--pp-brand-1);">@{{ profile.slug }}</span></span>
+                    <span class="small fw-semibold text-muted d-none d-md-block">Workspace / <span
+                            style="color: var(--pp-brand-1);">@{{ profile.slug }}</span></span>
                 </div>
             </div>
             <div class="d-flex align-items-center gap-2 gap-sm-3">
-                <button type="button" class="btn btn-white btn-sm px-3 rounded-pill d-none d-md-flex align-items-center gap-2" id="dashCopyUrl">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <button type="button"
+                    class="btn btn-white btn-sm px-3 rounded-pill d-none d-md-flex align-items-center gap-2"
+                    id="dashCopyUrl">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
                     Copy Link
                 </button>
-                <a href="/p/{{ profile.slug }}" target="_blank" rel="noopener" class="btn btn-primary d-flex align-items-center gap-2 px-3 btn-sm">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                    <span class="d-none d-sm-inline">Preview</span>
+                <a href="/p/{{ profile.slug }}" target="_blank" rel="noopener"
+                    class="btn btn-primary d-flex align-items-center gap-2 px-3 btn-sm">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <span class="d-none d-sm-inline lang-text" data-en="Preview" data-am="እይታ">Preview</span>
                 </a>
+                <button class="btn btn-sm btn-white rounded-pill px-3 shadow-sm lang-toggle-btn border ms-1" onclick="toggleLanguage()" style="font-size: 0.85rem; font-weight: bold;">🇪🇹 አማርኛ</button>
                 <form method="post" action="/auth/logout" class="m-0 ms-1">
-                    <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill px-3" style="border: none; background: rgba(244,63,94,0.1); color: var(--pp-brand-3);">Log out</button>
+                    <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill px-3 lang-text"
+                        style="border: none; background: rgba(244,63,94,0.1); color: var(--pp-brand-3);" data-en="Log out" data-am="ውጣ">Log out</button>
                 </form>
             </div>
         </div>
@@ -42,31 +58,62 @@
             <div class="col-lg-3 col-xl-2">
                 <div class="glass-card p-4 h-100 position-sticky" style="top: 100px;">
                     <div class="d-flex align-items-center gap-3 mb-4">
-                        <div class="rounded-circle overflow-hidden shadow-sm" style="width: 48px; height: 48px; background: linear-gradient(135deg, #e2e8f0, #cbd5e1); border: 2px solid white;"></div>
+                        <div class="rounded-circle overflow-hidden shadow-sm"
+                            style="width: 48px; height: 48px; background: linear-gradient(135deg, #e2e8f0, #cbd5e1); border: 2px solid white;">
+                        </div>
                         <div>
-                            <p class="fw-bold mb-0 text-truncate" style="max-width: 120px;">{{ profile.display_name }}</p>
-                            <span class="badge badge-creative rounded-pill mt-1 py-1 px-2" style="font-size: 0.65rem;">{{ profile.profile_type|title }}</span>
+                            <p class="fw-bold mb-0 text-truncate" style="max-width: 120px;">{{ profile.display_name }}
+                            </p>
+                            <span class="badge badge-creative rounded-pill mt-1 py-1 px-2"
+                                style="font-size: 0.65rem;">{{ profile.profile_type|title }}</span>
                         </div>
                     </div>
-                    
+
                     <hr class="my-4" style="border-color: var(--pp-border-strong);">
 
                     <nav class="nav nav-pills flex-column gap-2 pp-clean-tabs" id="dashboardTabs" role="tablist">
-                        <button class="nav-link w-100 text-start d-flex align-items-center gap-2 {% if not request.query_params.get('proof') and not request.query_params.get('rating') %}active{% endif %}" style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-profile-tab" data-bs-toggle="tab" data-bs-target="#pills-profile" type="button" role="tab">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            Profile Details
+                        <button
+                            class="nav-link w-100 text-start d-flex align-items-center gap-2 {% if not request.query_params.get('proof') and not request.query_params.get('rating') %}active{% endif %}"
+                            style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-profile-tab"
+                            data-bs-toggle="tab" data-bs-target="#pills-profile" type="button" role="tab">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <span class="lang-text" data-en="Profile" data-am="መገለጫ">Profile</span>
                         </button>
-                        <button class="nav-link w-100 text-start d-flex align-items-center gap-2 {% if request.query_params.get('proof') %}active{% endif %}" style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-proof-tab" data-bs-toggle="tab" data-bs-target="#pills-proof" type="button" role="tab">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                            Portfolio Proof
+                        <button
+                            class="nav-link w-100 text-start d-flex align-items-center gap-2 {% if request.query_params.get('proof') %}active{% endif %}"
+                            style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-proof-tab"
+                            data-bs-toggle="tab" data-bs-target="#pills-proof" type="button" role="tab">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+                                </path>
+                            </svg>
+                            <span class="lang-text" data-en="Portfolio" data-am="ፖርትፎሊዮ">Portfolio</span>
                         </button>
-                        <button class="nav-link w-100 text-start d-flex align-items-center gap-2 {% if request.query_params.get('rating') %}active{% endif %}" style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-rating-tab" data-bs-toggle="tab" data-bs-target="#pills-rating" type="button" role="tab">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                            Testimonials
+                        <button
+                            class="nav-link w-100 text-start d-flex align-items-center gap-2 {% if request.query_params.get('rating') %}active{% endif %}"
+                            style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-rating-tab"
+                            data-bs-toggle="tab" data-bs-target="#pills-rating" type="button" role="tab">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polygon
+                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                </polygon>
+                            </svg>
+                            <span class="lang-text" data-en="Testimonials" data-am="ምስክርነት">Testimonials</span>
                         </button>
-                        <button class="nav-link w-100 text-start d-flex align-items-center gap-2" style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-feed-tab" data-bs-toggle="tab" data-bs-target="#pills-feed" type="button" role="tab">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                            Activity Feed
+                        <button class="nav-link w-100 text-start d-flex align-items-center gap-2"
+                            style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-feed-tab"
+                            data-bs-toggle="tab" data-bs-target="#pills-feed" type="button" role="tab">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                            <span class="lang-text" data-en="Activity" data-am="እንቅስቃሴ">Activity</span>
                         </button>
                     </nav>
 
@@ -80,19 +127,25 @@
 
                     <!-- Mini Stats in Sidebar -->
                     <div class="mt-5 pt-3 border-top" style="border-color: var(--pp-border-strong) !important;">
-                        <p class="text-uppercase small fw-bold text-muted mb-3" style="letter-spacing: 0.1em;">Quick Stats</p>
+                        <p class="text-uppercase small fw-bold text-muted mb-3 lang-text" style="letter-spacing: 0.1em;" data-en="Quick Stats" data-am="ፈጣን መረጃ">Quick Stats</p>
                         <div class="d-flex flex-column gap-3">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="small fw-medium text-muted">Projects</span>
-                                <span class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{ metrics.proof_count }}</span>
+                                <span class="small fw-medium text-muted lang-text" data-en="Projects" data-am="ስራዎች">Projects</span>
+                                <span
+                                    class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{
+                                    metrics.proof_count }}</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="small fw-medium text-muted">Reviews</span>
-                                <span class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{ metrics.rating_count }}</span>
+                                <span class="small fw-medium text-muted lang-text" data-en="Reviews" data-am="አስተያየቶች">Reviews</span>
+                                <span
+                                    class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{
+                                    metrics.rating_count }}</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="small fw-medium text-muted">Avg Rating</span>
-                                <span class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{ metrics.average_rating }} ★</span>
+                                <span class="small fw-medium text-muted lang-text" data-en="Avg Rating" data-am="አማካይ ደረጃ">Avg Rating</span>
+                                <span
+                                    class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{
+                                    metrics.average_rating }} ★</span>
                             </div>
                         </div>
                     </div>
@@ -101,55 +154,129 @@
 
             <!-- Main Workspace Area -->
             <div class="col-lg-9 col-xl-10">
-                {% if audit.improvements %}
-                <div class="glass-card mb-4 p-3 d-flex align-items-center justify-content-between border-start border-4 fade-in-up stagger-3" style="border-color: var(--pp-brand-3) !important; background: rgba(255,255,255,0.8);">
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger" style="width: 36px; height: 36px;">🔔</div>
-                        <div>
-                            <p class="mb-0 fw-bold fs-6">Complete your profile</p>
-                            <p class="mb-0 small text-muted">{{ audit.improvements[0] }}</p>
-                        </div>
-                    </div>
-                    <button class="btn btn-outline-primary btn-sm rounded-pill" onclick="document.getElementById('pills-profile-tab').click()">Fix now</button>
-                </div>
-                {% endif %}
+                <!-- Audit banner removed to keep the interface clean and responsive -->
 
                 <div class="tab-content" id="dashboardTabsContent">
                     <!-- Profile Tab -->
-                    <div class="tab-pane fade {% if not request.query_params.get('proof') and not request.query_params.get('rating') %}show active{% endif %}" id="pills-profile" role="tabpanel">
-                        <div class="glass-card p-4 p-md-5 fade-in-up">
-                            <div class="mb-5 pb-3 border-bottom border-light">
-                                <h2 class="h3 fw-bold mb-2">Profile Details</h2>
-                                <p class="text-muted mb-0">Customize how you appear on your stunning public page.</p>
+                    <div class="tab-pane fade {% if not request.query_params.get('proof') and not request.query_params.get('rating') %}show active{% endif %}"
+                        id="pills-profile" role="tabpanel">
+
+                        <!-- View Profile Mode (Summary Card) -->
+                        <div id="profileView"
+                            class="glass-card p-4 p-md-5 fade-in-up {% if not profile.bio and not profile.tagline and not request.query_params.get('profile') %}d-none{% endif %}">
+                            <div class="d-flex justify-content-between align-items-start mb-4 gap-3">
+                                <div>
+                                    <h2 class="display-6 fw-bold text-dark mb-1">{{ profile.display_name }}</h2>
+                                    <p class="fs-5 fw-semibold mb-0" style="color: var(--pp-brand-1);">{{
+                                        profile.tagline or 'No tagline set.' }}</p>
+                                </div>
+                                <button type="button"
+                                    class="btn btn-outline-primary rounded-pill px-4 shadow-sm flex-shrink-0"
+                                    onclick="document.getElementById('profileView').classList.add('d-none'); document.getElementById('profileEdit').classList.remove('d-none');">
+                                    ✏️ Edit
+                                </button>
                             </div>
 
                             {% if request.query_params.get("profile") == "1" %}
-                            <div class="alert alert-success d-flex align-items-center gap-2 border-0 mb-4" style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
+                            <div class="alert alert-success d-flex align-items-center gap-2 border-0 mb-4"
+                                style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
                                 <span class="fs-5">✨</span> Profile saved beautifully.
                             </div>
                             {% endif %}
+
+                            <div class="mb-5">
+                                <h4 class="h6 text-uppercase text-muted fw-bold mb-3 lang-text" style="letter-spacing: 0.1em;" data-en="About" data-am="ስለ እኔ">About</h4>
+                                <p class="text-dark fs-5" style="line-height: 1.7;">{{ profile.bio or 'No bio provided
+                                    yet. Give your clients a glimpse of your story.' }}</p>
+                            </div>
+
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="p-4 rounded-4 h-100"
+                                        style="background: rgba(0,0,0,0.02); border: 1px solid var(--pp-border);">
+                                        <p class="small text-muted text-uppercase fw-bold mb-2 lang-text" data-en="Location & Niche" data-am="አድራሻ እና የስራ ዘርፍ">Location & Niche</p>
+                                        <p class="mb-0 fs-5 text-dark">
+                                            {% if profile.niche %}<span class="fw-semibold">{{ profile.niche
+                                                }}</span><br>{% endif %}
+                                            {% if profile.city or profile.country %}<span class="opacity-75">📍 {{
+                                                profile.city }}, {{ profile.country }}</span>{% endif %}
+                                            {% if not profile.niche and not profile.city and not profile.country %}Not
+                                            specified.{% endif %}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-4 rounded-4 h-100"
+                                        style="background: rgba(0,0,0,0.02); border: 1px solid var(--pp-border);">
+                                        <p class="small text-muted text-uppercase fw-bold mb-3 lang-text" data-en="Online Presence" data-am="ማህበራዊ ትስስር">Online Presence</p>
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            {% if profile.website_url %}<a href="{{ profile.website_url }}"
+                                                target="_blank"
+                                                class="badge bg-white text-dark shadow-sm border text-decoration-none px-3 py-2 fs-6 rounded-pill">🌐
+                                                Website</a>{% endif %}
+                                            {% if profile.instagram_handle %}<span
+                                                class="badge bg-white text-dark shadow-sm border px-3 py-2 fs-6 rounded-pill">📸
+                                                {{ profile.instagram_handle }}</span>{% endif %}
+                                            {% if profile.tiktok_handle %}<span
+                                                class="badge bg-white text-dark shadow-sm border px-3 py-2 fs-6 rounded-pill">🎬
+                                                {{ profile.tiktok_handle }}</span>{% endif %}
+                                            {% if profile.telegram_handle %}<span
+                                                class="badge bg-white text-dark shadow-sm border px-3 py-2 fs-6 rounded-pill">✈️
+                                                {{ profile.telegram_handle }}</span>{% endif %}
+                                            {% if not profile.website_url and not profile.instagram_handle and not
+                                            profile.tiktok_handle and not profile.telegram_handle %}
+                                            <span class="text-muted">No social links added.</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Edit Profile Mode (Form) -->
+                        <div id="profileEdit"
+                            class="glass-card p-4 p-md-5 fade-in-up {% if profile.bio or profile.tagline or request.query_params.get('profile') == '1' %}d-none{% endif %}">
+                            <div
+                                class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom border-light">
+                                <div>
+                                    <h2 class="h3 fw-bold mb-1 lang-text" data-en="Edit Profile" data-am="መገለጫ ያስተካክሉ">Edit Profile</h2>
+                                    <p class="text-muted mb-0 lang-text" data-en="Customize how you appear on your stunning public page." data-am="በህዝብ ገፅዎ ላይ እንዴት እንደሚታዩ ያስተካክሉ።">Customize how you appear on your stunning public page.
+                                    </p>
+                                </div>
+                                <button type="button" class="btn btn-white btn-sm rounded-pill px-4 shadow-sm lang-text"
+                                    onclick="document.getElementById('profileEdit').classList.add('d-none'); document.getElementById('profileView').classList.remove('d-none');" data-en="Cancel" data-am="ሰርዝ">
+                                    Cancel
+                                </button>
+                            </div>
 
                             <form method="post" action="/dashboard/profile">
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <label class="form-label">Display Name</label>
-                                        <input name="display_name" type="text" value="{{ profile.display_name }}" class="form-control" required placeholder="Your name or brand">
+                                        <input name="display_name" type="text" value="{{ profile.display_name }}"
+                                            class="form-control" required placeholder="Your name or brand">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Profile Type</label>
                                         <select name="profile_type" class="form-select">
-                                            <option value="creator" {% if profile.profile_type == "creator" %}selected{% endif %}>Creator</option>
-                                            <option value="business" {% if profile.profile_type == "business" %}selected{% endif %}>Business</option>
-                                            <option value="freelancer" {% if profile.profile_type == "freelancer" %}selected{% endif %}>Freelancer</option>
+                                            <option value="creator" {% if profile.profile_type=="creator" %}selected{%
+                                                endif %}>Creator</option>
+                                            <option value="business" {% if profile.profile_type=="business" %}selected{%
+                                                endif %}>Business</option>
+                                            <option value="freelancer" {% if profile.profile_type=="freelancer"
+                                                %}selected{% endif %}>Freelancer</option>
                                         </select>
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label">Punchy Tagline</label>
-                                        <input name="tagline" type="text" value="{{ profile.tagline or '' }}" class="form-control" placeholder="E.g. Elevating brands through pixel-perfect design">
+                                        <input name="tagline" type="text" value="{{ profile.tagline or '' }}"
+                                            class="form-control"
+                                            placeholder="E.g. Elevating brands through pixel-perfect design">
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label">Professional Bio</label>
-                                        <textarea name="bio" rows="4" class="form-control" placeholder="Tell your story. Why should clients trust you?">{{ profile.bio or '' }}</textarea>
+                                        <textarea name="bio" rows="4" class="form-control"
+                                            placeholder="Tell your story. Why should clients trust you?">{{ profile.bio or '' }}</textarea>
                                     </div>
                                 </div>
 
@@ -157,15 +284,18 @@
                                 <div class="row g-4">
                                     <div class="col-md-4">
                                         <label class="form-label">Niche</label>
-                                        <input name="niche" type="text" value="{{ profile.niche or '' }}" class="form-control" placeholder="e.g. Brand Design">
+                                        <input name="niche" type="text" value="{{ profile.niche or '' }}"
+                                            class="form-control" placeholder="e.g. Brand Design">
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">City</label>
-                                        <input name="city" type="text" value="{{ profile.city or '' }}" class="form-control" placeholder="e.g. New York">
+                                        <input name="city" type="text" value="{{ profile.city or '' }}"
+                                            class="form-control" placeholder="e.g. New York">
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-label">Country</label>
-                                        <input name="country" type="text" value="{{ profile.country }}" class="form-control" placeholder="e.g. United States">
+                                        <input name="country" type="text" value="{{ profile.country }}"
+                                            class="form-control" placeholder="e.g. United States">
                                     </div>
                                 </div>
 
@@ -173,39 +303,50 @@
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <label class="form-label">Website URL</label>
-                                        <input name="website_url" type="url" value="{{ profile.website_url or '' }}" placeholder="https://" class="form-control">
+                                        <input name="website_url" type="url" value="{{ profile.website_url or '' }}"
+                                            placeholder="https://" class="form-control">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Instagram</label>
-                                        <input name="instagram_handle" type="text" value="{{ profile.instagram_handle or '' }}" placeholder="@handle" class="form-control">
+                                        <input name="instagram_handle" type="text"
+                                            value="{{ profile.instagram_handle or '' }}" placeholder="@handle"
+                                            class="form-control">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">TikTok</label>
-                                        <input name="tiktok_handle" type="text" value="{{ profile.tiktok_handle or '' }}" placeholder="@handle" class="form-control">
+                                        <input name="tiktok_handle" type="text"
+                                            value="{{ profile.tiktok_handle or '' }}" placeholder="@handle"
+                                            class="form-control">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Telegram</label>
-                                        <input name="telegram_handle" type="text" value="{{ profile.telegram_handle or '' }}" placeholder="@handle" class="form-control">
+                                        <input name="telegram_handle" type="text"
+                                            value="{{ profile.telegram_handle or '' }}" placeholder="@handle"
+                                            class="form-control">
                                     </div>
                                 </div>
-                                
-                                <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary px-5 shadow-lg">Save Profile</button>
+
+                                <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end gap-3">
+                                    <button type="button" class="btn btn-white px-4 rounded-pill shadow-sm lang-text"
+                                        onclick="document.getElementById('profileEdit').classList.add('d-none'); document.getElementById('profileView').classList.remove('d-none');" data-en="Cancel" data-am="ሰርዝ">Cancel</button>
+                                    <button type="submit" class="btn btn-primary px-5 shadow-lg rounded-pill lang-text" data-en="Save Profile" data-am="መገለጫ አስቀምጥ">Save Profile</button>
                                 </div>
                             </form>
                         </div>
                     </div>
 
                     <!-- Proof Tab -->
-                    <div class="tab-pane fade {% if request.query_params.get('proof') %}show active{% endif %}" id="pills-proof" role="tabpanel">
+                    <div class="tab-pane fade {% if request.query_params.get('proof') %}show active{% endif %}"
+                        id="pills-proof" role="tabpanel">
                         <div class="glass-card p-4 p-md-5">
                             <div class="mb-5 pb-3 border-bottom border-light">
-                                <h2 class="h3 fw-bold mb-2">Add Portfolio Proof</h2>
-                                <p class="text-muted mb-0">Publish undeniable evidence of your best work.</p>
+                                <h2 class="h3 fw-bold mb-2 lang-text" data-en="Add Portfolio Proof" data-am="የስራ ማስረጃ ያክሉ">Add Portfolio Proof</h2>
+                                <p class="text-muted mb-0 lang-text" data-en="Publish undeniable evidence of your best work." data-am="የምርጥ ስራዎችዎን የማይታበል ማስረጃ ያትሙ።">Publish undeniable evidence of your best work.</p>
                             </div>
 
                             {% if request.query_params.get("proof") == "1" %}
-                            <div class="alert alert-success d-flex align-items-center gap-2 border-0 mb-4" style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
+                            <div class="alert alert-success d-flex align-items-center gap-2 border-0 mb-4"
+                                style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
                                 <span class="fs-5">🎉</span> Project successfully published!
                             </div>
                             {% endif %}
@@ -214,11 +355,13 @@
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <label class="form-label">Project Title</label>
-                                        <input name="title" type="text" class="form-control" required placeholder="e.g., Brand Identity Redesign">
+                                        <input name="title" type="text" class="form-control" required
+                                            placeholder="e.g., Brand Identity Redesign">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Client / Brand</label>
-                                        <input name="client_name" type="text" class="form-control" placeholder="e.g., Acme Corp (optional)">
+                                        <input name="client_name" type="text" class="form-control"
+                                            placeholder="e.g., Acme Corp (optional)">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Category</label>
@@ -231,11 +374,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Killer Result Metric</label>
-                                        <input name="result_metric" type="text" placeholder="e.g., +40% Conversion, $5K ROI" class="form-control fw-semibold" style="color: var(--pp-brand-1);">
+                                        <input name="result_metric" type="text"
+                                            placeholder="e.g., +40% Conversion, $5K ROI"
+                                            class="form-control fw-semibold" style="color: var(--pp-brand-1);">
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label">Impact Summary</label>
-                                        <textarea name="summary" rows="4" class="form-control" required placeholder="Describe the challenge and your creative solution..."></textarea>
+                                        <textarea name="summary" rows="4" class="form-control" required
+                                            placeholder="Describe the challenge and your creative solution..."></textarea>
                                     </div>
                                 </div>
 
@@ -243,34 +389,50 @@
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <label class="form-label">Live Link / Proof URL</label>
-                                        <input name="proof_url" type="url" placeholder="https://..." class="form-control">
+                                        <input name="proof_url" type="url" placeholder="https://..."
+                                            class="form-control">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Stunning Cover Image URL</label>
-                                        <input name="image_url" type="url" placeholder="https://..." class="form-control">
+                                        <input name="image_url" type="url" placeholder="https://..."
+                                            class="form-control">
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label">Verification Note (Optional)</label>
-                                        <input name="verification_note" type="text" placeholder="e.g., Verified by live traffic data..." class="form-control">
+                                        <input name="verification_note" type="text"
+                                            placeholder="e.g., Verified by live traffic data..." class="form-control">
                                     </div>
                                 </div>
                                 <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary px-5 shadow-lg">Publish Project</button>
+                                    <button type="submit" class="btn btn-primary px-5 shadow-lg lang-text" data-en="Publish Project" data-am="ስራውን አትም">Publish
+                                        Project</button>
                                 </div>
                             </form>
                         </div>
                     </div>
 
                     <!-- Rating Form Tab -->
-                    <div class="tab-pane fade {% if request.query_params.get('rating') %}show active{% endif %}" id="pills-rating" role="tabpanel">
+                    <div class="tab-pane fade {% if request.query_params.get('rating') %}show active{% endif %}"
+                        id="pills-rating" role="tabpanel">
                         <div class="glass-card p-4 p-md-5">
-                            <div class="mb-5 pb-3 border-bottom border-light">
-                                <h2 class="h3 fw-bold mb-2">Add Client Testimonial</h2>
-                                <p class="text-muted mb-0">Record what your clients say about your stellar work.</p>
+                            <div
+                                class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 pb-3 border-bottom border-light gap-3">
+                                <div>
+                                    <h2 class="h3 fw-bold mb-2 lang-text" data-en="Client Testimonials" data-am="የደንበኞች አስተያየት">Client Testimonials</h2>
+                                    <p class="text-muted mb-0 lang-text" data-en="Record what your clients say about your stellar work." data-am="ደንበኞችዎ ስለ ምርጥ ስራዎ ምን እንደሚሉ ይመዝግቡ።">Record what your clients say about your stellar work.</p>
+                                </div>
+                                <div class="d-flex align-items-center gap-2">
+                                    <button type="button"
+                                        class="btn btn-white btn-sm rounded-pill px-4 shadow-sm fw-bold border lang-text"
+                                        id="copyReviewLinkBtn" style="color: var(--pp-brand-1);" data-en="🔗 Copy Review Link" data-am="🔗 መስጫ ሊንክ ኮፒ አድርግ">
+                                        🔗 Copy Review Link
+                                    </button>
+                                </div>
                             </div>
 
                             {% if request.query_params.get("rating") == "1" %}
-                            <div class="alert alert-success d-flex align-items-center gap-2 border-0 mb-4" style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
+                            <div class="alert alert-success d-flex align-items-center gap-2 border-0 mb-4"
+                                style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
                                 <span class="fs-5">💬</span> Testimonial glowing beautifully on your profile.
                             </div>
                             {% endif %}
@@ -279,11 +441,13 @@
                                 <div class="row g-4">
                                     <div class="col-md-6">
                                         <label class="form-label">Client Name</label>
-                                        <input name="reviewer_name" type="text" class="form-control" required placeholder="Full name">
+                                        <input name="reviewer_name" type="text" class="form-control" required
+                                            placeholder="Full name">
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label">Client Title / Company</label>
-                                        <input name="reviewer_role" type="text" placeholder="e.g., CEO at Acme Inc." class="form-control">
+                                        <input name="reviewer_role" type="text" placeholder="e.g., CEO at Acme Inc."
+                                            class="form-control">
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label">Star Rating</label>
@@ -297,11 +461,14 @@
                                     </div>
                                     <div class="col-12">
                                         <label class="form-label">Exact Quote</label>
-                                        <textarea name="testimonial" rows="4" class="form-control fs-5 fst-italic" required placeholder='"Working with them was the best investment we made..."'></textarea>
+                                        <textarea name="testimonial" rows="4" class="form-control fs-5 fst-italic"
+                                            required
+                                            placeholder='"Working with them was the best investment we made..."'></textarea>
                                     </div>
                                 </div>
                                 <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary px-5 shadow-lg">Save Testimonial</button>
+                                    <button type="submit" class="btn btn-primary px-5 shadow-lg lang-text" data-en="Save Testimonial" data-am="አስተያየቱን አስቀምጥ">Save
+                                        Testimonial</button>
                                 </div>
                             </form>
                         </div>
@@ -311,25 +478,31 @@
                     <div class="tab-pane fade" id="pills-feed" role="tabpanel">
                         <div class="glass-card p-4 p-md-5">
                             <div class="mb-5 pb-3 border-bottom border-light">
-                                <h2 class="h3 fw-bold mb-2">Live Activity Feed</h2>
-                                <p class="text-muted mb-0">Your recently published proof items.</p>
+                                <h2 class="h3 fw-bold mb-2 lang-text" data-en="Live Activity Feed" data-am="የቅርብ ጊዜ እንቅስቃሴዎች">Live Activity Feed</h2>
+                                <p class="text-muted mb-0 lang-text" data-en="Your recently published proof items." data-am="በቅርብ ጊዜ የታተሙ የስራ ማስረጃዎች">Your recently published proof items.</p>
                             </div>
 
                             <div class="d-flex flex-column gap-3">
                                 {% for item in proof_items %}
-                                <div class="p-4 rounded-4 position-relative overflow-hidden mb-2" style="background: rgba(255,255,255,0.7); box-shadow: var(--pp-shadow-sm); border: 1px solid var(--pp-border-strong); transition: transform 0.2s;">
-                                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
+                                <div class="p-4 rounded-4 position-relative overflow-hidden mb-2"
+                                    style="background: rgba(255,255,255,0.7); box-shadow: var(--pp-shadow-sm); border: 1px solid var(--pp-border-strong); transition: transform 0.2s;">
+                                    <div
+                                        class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
                                         <div class="pe-md-4">
                                             <div class="d-flex align-items-center gap-2 mb-2">
-                                                <span class="badge badge-creative rounded-pill py-1">{{ item.category|upper }}</span>
-                                                <span class="small text-muted fw-semibold">{{ item.created_at.strftime("%b %d, %Y") }}</span>
+                                                <span class="badge badge-creative rounded-pill py-1">{{
+                                                    item.category|upper }}</span>
+                                                <span class="small text-muted fw-semibold">{{
+                                                    item.created_at.strftime("%b %d, %Y") }}</span>
                                             </div>
                                             <h4 class="h5 fw-bold text-dark mb-2">{{ item.title }}</h4>
                                             <p class="text-muted small mb-0">{{ item.summary }}</p>
                                         </div>
                                         {% if item.result_metric %}
                                         <div class="flex-shrink-0">
-                                            <span class="badge px-3 py-2 rounded-pill fs-6 shadow-sm" style="background: var(--pp-gradient-main); color: var(--pp-ink-dark);">{{ item.result_metric }}</span>
+                                            <span class="badge px-3 py-2 rounded-pill fs-6 shadow-sm"
+                                                style="background: var(--pp-gradient-main); color: var(--pp-ink-dark);">{{
+                                                item.result_metric }}</span>
                                         </div>
                                         {% endif %}
                                     </div>
@@ -339,7 +512,9 @@
                                     <div class="mb-3 fs-1 opacity-50">📁</div>
                                     <h4 class="fw-bold mb-2">No projects yet</h4>
                                     <p class="text-muted mb-4">Start building your verified portfolio.</p>
-                                    <button type="button" class="btn btn-outline-primary shadow-sm" onclick="document.getElementById('pills-proof-tab').click()">Add your first project</button>
+                                    <button type="button" class="btn btn-outline-primary shadow-sm"
+                                        onclick="document.getElementById('pills-proof-tab').click()">Add your first
+                                        project</button>
                                 </div>
                                 {% endfor %}
                             </div>
@@ -352,7 +527,8 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
+        // Copy Public Profile Link
         const copyBtn = document.getElementById("dashCopyUrl");
         if (copyBtn) {
             const originalContent = copyBtn.innerHTML;
@@ -362,6 +538,21 @@
                     navigator.clipboard.writeText(url).then(function () {
                         copyBtn.innerHTML = '<span class="text-success fw-bold">✓ Copied!</span>';
                         setTimeout(() => copyBtn.innerHTML = originalContent, 2000);
+                    });
+                }
+            });
+        }
+
+        // Copy Review Request Link
+        const copyReviewBtn = document.getElementById("copyReviewLinkBtn");
+        if (copyReviewBtn) {
+            const originalReviewContent = copyReviewBtn.innerHTML;
+            copyReviewBtn.addEventListener("click", function () {
+                var url = window.location.origin + "/p/{{ profile.slug }}/review";
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(url).then(function () {
+                        copyReviewBtn.innerHTML = '<span class="text-success fw-bold">✓ Copied Review Link!</span>';
+                        setTimeout(() => copyReviewBtn.innerHTML = originalReviewContent, 2500);
                     });
                 }
             });

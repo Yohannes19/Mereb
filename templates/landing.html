@@ -13,21 +13,22 @@
     <nav class="navbar navbar-expand-lg pp-nav">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="/">
-                <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">P</div>
-                <span class="fs-5 fw-bold" style="color: var(--pp-ink-dark); letter-spacing: -0.02em;">ProofPage</span>
+                <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">M</div>
+                <span class="fs-5 fw-bold" style="color: var(--pp-ink-dark); letter-spacing: -0.02em;">Mereb</span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#lpNav" aria-controls="lpNav" aria-expanded="false" aria-label="Menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="lpNav">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-3">
-                    <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#proof">What to include</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#who">Who it's for</a></li>
+                    <li class="nav-item"><a class="nav-link lang-text" href="#how" data-en="How it works" data-am="እንዴት እንደሚሰራ">How it works</a></li>
+                    <li class="nav-item"><a class="nav-link lang-text" href="#proof" data-en="What to include" data-am="ምን ማካተት እንዳለበት">What to include</a></li>
+                    <li class="nav-item"><a class="nav-link lang-text" href="#who" data-en="Who it's for" data-am="ለማን ነው">Who it's for</a></li>
                 </ul>
                 <div class="d-flex flex-column flex-sm-row gap-3 align-items-center">
-                    <a href="/auth/login" class="text-decoration-none fw-semibold" style="color: var(--pp-ink-base); transition: 0.2s;">Log in</a>
-                    <a href="/auth/register" class="btn btn-primary btn-sm px-4">Create Profile</a>
+                    <button class="btn btn-sm btn-outline-secondary rounded-pill px-3 lang-toggle-btn" onclick="toggleLanguage()" style="font-size: 0.8rem; font-weight: bold;">🇪🇹 አማርኛ</button>
+                    <a href="/auth/login" class="text-decoration-none fw-semibold lang-text" style="color: var(--pp-ink-base); transition: 0.2s;" data-en="Log in" data-am="ይግቡ">Log in</a>
+                    <a href="/auth/register" class="btn btn-primary btn-sm px-4 lang-text" data-en="Create Profile" data-am="መለያ ይፍጠሩ">Create Profile</a>
                 </div>
             </div>
         </div>
@@ -37,17 +38,17 @@
         <!-- Hero Section -->
         <section class="py-5 mt-4 mt-md-5 text-center px-3 fade-in-up stagger-2">
             <div class="container">
-                <span class="badge badge-creative mb-4 px-3 py-2">For creators & independent professionals</span>
-                <h1 class="display-3 fw-bold mb-4" style="line-height: 1.1; max-width: 900px; margin: 0 auto; letter-spacing: -0.04em;">
+                <span class="badge badge-creative mb-4 px-3 py-2 lang-text" data-en="For creators & independent professionals" data-am="ለፈጣሪዎች እና ራሳቸውን ለሚሰሩ ባለሙያዎች">For creators & independent professionals</span>
+                <h1 class="display-3 fw-bold mb-4 lang-text" style="line-height: 1.1; max-width: 900px; margin: 0 auto; letter-spacing: -0.04em;" data-en="One link that shows <br/> <span class='text-gradient'>real work</span>, not just claims." data-am="አንድ ሊንክ፣ ብቃትዎን <br/> <span class='text-gradient'>በተግባር</span> ለማሳየት።">
                     One link that shows <br/>
                     <span class="text-gradient">real work</span>, not just claims.
                 </h1>
-                <p class="lead mb-5 mx-auto" style="max-width: 650px; color: var(--pp-ink-muted); font-size: 1.25rem;">
-                    ProofPage gives you a breathtaking public page for your portfolio, verifiable outcomes, and client testimonials. Let your work speak volumes.
+                <p class="lead mb-5 mx-auto lang-text" style="max-width: 650px; color: var(--pp-ink-muted); font-size: 1.25rem;" data-en="Mereb gives you a breathtaking public page for your portfolio, verifiable outcomes, and client testimonials. Let your work speak volumes." data-am="መረብ ስራዎን፣ የደንበኞችዎን ምስክርነት እና ውጤቶችዎን በአንድ የሚያምር ገጽ ላይ እንዲያቀርቡ ያስችልዎታል።">
+                    Mereb gives you a breathtaking public page for your portfolio, verifiable outcomes, and client testimonials. Let your work speak volumes.
                 </p>
                 <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-                    <a href="/auth/register" class="btn btn-primary btn-lg px-5">Start for free</a>
-                    <a href="/p/muna-studio" class="btn btn-white btn-lg px-5 text-decoration-none">View example</a>
+                    <a href="/auth/register" class="btn btn-primary btn-lg px-5 lang-text" data-en="Start for free" data-am="በነፃ ይጀምሩ">Start for free</a>
+                    <a href="/p/muna-studio" class="btn btn-white btn-lg px-5 text-decoration-none lang-text" data-en="View example" data-am="ምሳሌ ይመልከቱ">View example</a>
                 </div>
             </div>
         </section>
@@ -103,29 +104,29 @@
         <section id="how" class="py-5 mt-5">
             <div class="container px-4">
                 <div class="text-center mb-5 fade-in-up stagger-1">
-                    <span class="badge badge-creative mb-3">The Process</span>
-                    <h2 class="display-5 fw-bold">Three steps to instant trust.</h2>
+                    <span class="badge badge-creative mb-3 lang-text" data-en="The Process" data-am="አሰራሩ">The Process</span>
+                    <h2 class="display-5 fw-bold lang-text" data-en="Three steps to instant trust." data-am="ታማኝነትን ለመገንባት ሦስት ደረጃዎች።">Three steps to instant trust.</h2>
                 </div>
                 <div class="row g-4">
                     <div class="col-md-4 fade-in-up stagger-2">
                         <div class="glass-card h-100 p-4 p-lg-5 text-center">
                             <div class="mb-4 mx-auto d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; border-radius: 20px; background: var(--pp-bg); color: var(--pp-brand-1); font-size: 1.5rem; font-weight: 800; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">1</div>
-                            <h3 class="h4 fw-bold mb-3">Set up profile</h3>
-                            <p class="text-muted">Name, niche, city, and a short bio so visitors immediately understand what you do and who you help.</p>
+                            <h3 class="h4 fw-bold mb-3 lang-text" data-en="Set up profile" data-am="መገለጫዎን ያዋቅሩ">Set up profile</h3>
+                            <p class="text-muted lang-text" data-en="Name, niche, city, and a short bio so visitors immediately understand what you do and who you help." data-am="ስምዎን፣ የሙያ ዘርፍዎን፣ ከተማዎን እና አጭር መግለጫ በማከል ጎብኚዎች ምን እንደሚሰሩ እንዲረዱ ያድርጉ።">Name, niche, city, and a short bio so visitors immediately understand what you do and who you help.</p>
                         </div>
                     </div>
                     <div class="col-md-4 fade-in-up stagger-3">
                         <div class="glass-card h-100 p-4 p-lg-5 text-center">
                             <div class="mb-4 mx-auto d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; border-radius: 20px; background: var(--pp-bg); color: var(--pp-brand-2); font-size: 1.5rem; font-weight: 800; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">2</div>
-                            <h3 class="h4 fw-bold mb-3">Add proof items</h3>
-                            <p class="text-muted">Concrete projects, verifiable outcomes, links, and optional notes so the work feels undeniable.</p>
+                            <h3 class="h4 fw-bold mb-3 lang-text" data-en="Add proof items" data-am="ማስረጃዎችን ያክሉ">Add proof items</h3>
+                            <p class="text-muted lang-text" data-en="Concrete projects, verifiable outcomes, links, and optional notes so the work feels undeniable." data-am="ተጨባጭ ስራዎችን፣ ሊረጋገጡ የሚችሉ ውጤቶችን እና ሊንኮችን በማከል ስራዎን ተዓማኒ ያድርጉ።">Concrete projects, verifiable outcomes, links, and optional notes so the work feels undeniable.</p>
                         </div>
                     </div>
                     <div class="col-md-4 fade-in-up stagger-4">
                         <div class="glass-card h-100 p-4 p-lg-5 text-center">
                             <div class="mb-4 mx-auto d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; border-radius: 20px; background: var(--pp-bg); color: var(--pp-brand-3); font-size: 1.5rem; font-weight: 800; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">3</div>
-                            <h3 class="h4 fw-bold mb-3">Share testimonials</h3>
-                            <p class="text-muted">Collect verified ratings and quotes so trust sits beautifully right next to your best work.</p>
+                            <h3 class="h4 fw-bold mb-3 lang-text" data-en="Share testimonials" data-am="ምስክርነቶችን ያጋሩ">Share testimonials</h3>
+                            <p class="text-muted lang-text" data-en="Collect verified ratings and quotes so trust sits beautifully right next to your best work." data-am="የተረጋገጡ ደረጃዎችን እና ምስክርነቶችን በመሰብሰብ ከስራዎ ጎን ለጎን ያቅርቡ።">Collect verified ratings and quotes so trust sits beautifully right next to your best work.</p>
                         </div>
                     </div>
                 </div>
@@ -140,9 +141,9 @@
                     <div class="position-absolute" style="bottom: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0) 70%); z-index: 0;"></div>
                     
                     <div class="position-relative z-1">
-                        <h2 class="display-5 fw-bold mb-4">Ready when your next client asks for proof?</h2>
-                        <p class="lead mb-5 mx-auto text-muted" style="max-width: 600px;">Create your breathtaking portfolio page, add your best verifiable work, and share one powerful link.</p>
-                        <a href="/auth/register" class="btn btn-primary btn-lg px-5 shadow-lg">Claim Your Profile Now</a>
+                        <h2 class="display-5 fw-bold mb-4 lang-text" data-en="Ready when your next client asks for proof?" data-am="ቀጣዩ ደንበኛዎ ማስረጃ ሲጠይቅዎ ዝግጁ ኖት?">Ready when your next client asks for proof?</h2>
+                        <p class="lead mb-5 mx-auto text-muted lang-text" style="max-width: 600px;" data-en="Create your breathtaking portfolio page, add your best verifiable work, and share one powerful link." data-am="የሚያምር የፖርትፎሊዮ ገጽዎን ይፍጠሩ፣ ምርጥ ስራዎችዎን ያክሉ እና አንድ ጠንካራ ሊንክ ያጋሩ።">Create your breathtaking portfolio page, add your best verifiable work, and share one powerful link.</p>
+                        <a href="/auth/register" class="btn btn-primary btn-lg px-5 shadow-lg lang-text" data-en="Claim Your Profile Now" data-am="መገለጫዎን አሁኑኑ ይፍጠሩ">Claim Your Profile Now</a>
                     </div>
                 </div>
             </div>
@@ -151,11 +152,11 @@
 
     <footer class="py-4 text-center glass-card border-0 rounded-0 border-top mt-auto" style="box-shadow: none;">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
-            <p class="small text-muted mb-0 fw-medium">&copy; 2026 ProofPage. All rights reserved.</p>
+            <p class="small text-muted mb-0 fw-medium lang-text" data-en="&copy; 2026 Mereb. All rights reserved." data-am="&copy; 2026 መረብ። መብቱ በህግ የተጠበቀ ነው።">&copy; 2026 Mereb. All rights reserved.</p>
             <div class="d-flex gap-4 small fw-semibold">
-                <a href="#how" class="text-decoration-none text-muted">How it works</a>
-                <a href="/auth/login" class="text-decoration-none text-muted">Log in</a>
-                <a href="/auth/register" class="text-decoration-none" style="color: var(--pp-brand-1);">Sign up for free</a>
+                <a href="#how" class="text-decoration-none text-muted lang-text" data-en="How it works" data-am="እንዴት እንደሚሰራ">How it works</a>
+                <a href="/auth/login" class="text-decoration-none text-muted lang-text" data-en="Log in" data-am="ይግቡ">Log in</a>
+                <a href="/auth/register" class="text-decoration-none lang-text" style="color: var(--pp-brand-1);" data-en="Sign up for free" data-am="በነፃ ይመዝገቡ">Sign up for free</a>
             </div>
         </div>
     </footer>

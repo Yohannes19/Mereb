@@ -8,7 +8,11 @@
     <div class="ambient-orb ambient-orb-3" style="opacity: 0.1;"></div>
 </div>
 
-<main class="min-vh-100 py-5">
+<main class="min-vh-100 py-5 position-relative">
+    <!-- Language Toggle Fixed -->
+    <div class="position-absolute p-3 p-md-4 z-3" style="top: 0; right: 0;">
+        <button class="btn btn-sm btn-white rounded-pill px-3 shadow-sm lang-toggle-btn border" onclick="toggleLanguage()" style="font-size: 0.85rem; font-weight: bold;">🇪🇹 አማርኛ</button>
+    </div>
     <div class="container" style="max-width: 1000px;">
         <!-- Premium Public Hero -->
         <header class="mb-5 fade-in-up stagger-1">
@@ -20,7 +24,7 @@
                     <div class="col-md-8 text-center text-md-start">
                         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 mb-3">
                             <span class="badge badge-creative rounded-pill">{{ profile.profile_type|upper }}</span>
-                            <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.12em;">Verified Portfolio</span>
+                            <span class="text-muted small fw-bold text-uppercase lang-text" style="letter-spacing: 0.12em;" data-en="Verified Portfolio" data-am="የተረጋገጠ ፖርትፎሊዮ">Verified Portfolio</span>
                         </div>
                         <h1 class="display-4 fw-bold text-dark mb-3" style="line-height: 1.05;">{{ profile.display_name }}</h1>
                         {% if profile.tagline %}
@@ -41,13 +45,13 @@
                             <div class="text-center bg-white shadow-sm border px-4 py-3 rounded-4 w-100" style="max-width: 240px;">
                                 <div class="fs-2 mb-1">⭐</div>
                                 <h3 class="fw-bold mb-0 text-dark">{{ metrics.average_rating }} / 5</h3>
-                                <p class="small text-muted mb-0 fw-semibold">from {{ metrics.rating_count }} reviews</p>
+                                <p class="small text-muted mb-0 fw-semibold lang-text" data-en="from {{ metrics.rating_count }} reviews" data-am="ከ {{ metrics.rating_count }} አስተያየቶች">from {{ metrics.rating_count }} reviews</p>
                             </div>
                             
                             <!-- Links -->
                             <div class="d-flex gap-2 flex-wrap justify-content-center justify-content-md-end w-100" style="max-width: 240px;">
                                 {% if profile.website_url %}
-                                <a href="{{ profile.website_url }}" target="_blank" rel="noopener" class="btn btn-primary w-100 fw-semibold rounded-pill py-2 shadow-sm">Visit Website ↗</a>
+                                <a href="{{ profile.website_url }}" target="_blank" rel="noopener" class="btn btn-primary w-100 fw-semibold rounded-pill py-2 shadow-sm lang-text" data-en="Visit Website ↗" data-am="ድረ-ገጽ ጎብኝ ↗">Visit Website ↗</a>
                                 {% endif %}
                                 {% if profile.instagram_handle %}
                                 <a href="https://instagram.com/{{ profile.instagram_handle.strip('@') }}" target="_blank" rel="noopener" class="btn btn-white w-100 rounded-pill py-2 text-decoration-none">📸 {{ profile.instagram_handle }}</a>
@@ -66,10 +70,10 @@
         <section class="mb-5 pb-4 fade-in-up stagger-2">
             <div class="d-flex align-items-end justify-content-between mb-4">
                 <div>
-                    <span class="badge badge-creative mb-2">Portfolio</span>
-                    <h2 class="display-6 fw-bold mb-0">Verified Work</h2>
+                    <span class="badge badge-creative mb-2 lang-text" data-en="Portfolio" data-am="ፖርትፎሊዮ">Portfolio</span>
+                    <h2 class="display-6 fw-bold mb-0 lang-text" data-en="Verified Work" data-am="የተረጋገጠ ስራ">Verified Work</h2>
                 </div>
-                <div class="bg-white px-3 py-2 rounded-pill shadow-sm border fw-bold text-dark d-none d-sm-block">
+                <div class="bg-white px-3 py-2 rounded-pill shadow-sm border fw-bold text-dark d-none d-sm-block lang-text" data-en="{{ metrics.proof_count }} Projects" data-am="{{ metrics.proof_count }} ስራዎች">
                     {{ metrics.proof_count }} Projects
                 </div>
             </div>
@@ -89,7 +93,7 @@
                                 </p>
                             </div>
                             {% if item.result_metric %}
-                            <div class="badge rounded-pill shadow-sm px-4 py-2 fs-6" style="background: var(--pp-gradient-main); color: var(--pp-ink-dark);">
+                            <div class="badge rounded-pill shadow-sm px-4 py-2 fs-6 lang-text" style="background: var(--pp-gradient-main); color: var(--pp-ink-dark);" data-en="📈 {{ item.result_metric }}" data-am="📈 {{ item.result_metric }}">
                                 📈 {{ item.result_metric }}
                             </div>
                             {% endif %}
@@ -99,12 +103,12 @@
                         
                         <div class="d-flex flex-wrap align-items-center gap-3">
                             {% if item.verification_note %}
-                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill small fw-semibold">
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill small fw-semibold lang-text" data-en="✓ Verified: {{ item.verification_note }}" data-am="✓ የተረጋገጠ፡ {{ item.verification_note }}">
                                 ✓ Verified: {{ item.verification_note }}
                             </span>
                             {% endif %}
                             {% if item.proof_url %}
-                            <a href="{{ item.proof_url }}" target="_blank" rel="noopener" class="btn btn-outline-primary rounded-pill btn-sm px-4 fw-semibold">
+                            <a href="{{ item.proof_url }}" target="_blank" rel="noopener" class="btn btn-outline-primary rounded-pill btn-sm px-4 fw-semibold lang-text" data-en="View Live Project ↗" data-am="ስራውን እይ ↗">
                                 View Live Project ↗
                             </a>
                             {% endif %}
@@ -114,8 +118,8 @@
                 {% else %}
                 <div class="glass-card p-5 text-center">
                     <span class="fs-1 opacity-50 mb-3 block">📁</span>
-                    <h4 class="fw-bold mb-1">No portfolio items yet</h4>
-                    <p class="text-muted">This profile hasn't published verifiable work yet.</p>
+                    <h4 class="fw-bold mb-1 lang-text" data-en="No portfolio items yet" data-am="እስካሁን ምንም ስራ አልታከለም">No portfolio items yet</h4>
+                    <p class="text-muted lang-text" data-en="This profile hasn't published verifiable work yet." data-am="ይህ መገለጫ ገና የተረጋገጠ ስራ አላተመም።">This profile hasn't published verifiable work yet.</p>
                 </div>
                 {% endfor %}
             </div>
@@ -124,8 +128,8 @@
         <!-- Testimonials -->
         <section class="mb-5 fade-in-up stagger-3">
             <div class="text-center mb-5">
-                <span class="badge badge-creative mb-2">Social Proof</span>
-                <h2 class="display-6 fw-bold mb-0">Client Reviews</h2>
+                <span class="badge badge-creative mb-2 lang-text" data-en="Social Proof" data-am="የደንበኞች ምስክርነት">Social Proof</span>
+                <h2 class="display-6 fw-bold mb-0 lang-text" data-en="Client Reviews" data-am="የደንበኞች አስተያየት">Client Reviews</h2>
             </div>
             
             <div class="row g-4">
@@ -145,7 +149,7 @@
                 </div>
                 {% else %}
                 <div class="col-12 text-center py-4">
-                    <p class="text-muted mb-0">Client reviews will appear here once published.</p>
+                    <p class="text-muted mb-0 lang-text" data-en="Client reviews will appear here once published." data-am="የደንበኞች አስተያየት ሲታተም እዚህ ይታያል።">Client reviews will appear here once published.</p>
                 </div>
                 {% endfor %}
             </div>
@@ -153,10 +157,10 @@
 
         <!-- Footer -->
         <footer class="pt-5 mt-5 border-top d-flex flex-column align-items-center text-center fade-in-up stagger-4" style="border-color: rgba(0,0,0,0.05) !important;">
-            <div class="brand-logomark mb-3 opacity-75" style="background: var(--pp-gradient-main); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 0.8rem;">P</div>
-            <p class="text-muted fw-semibold small mb-1">Powered by ProofPage</p>
-            <p class="text-muted small mb-3">Portfolio and reputation management for serious creators.</p>
-            <a href="/" class="btn btn-outline-primary btn-sm rounded-pill px-4">Create your own page ↗</a>
+            <div class="brand-logomark mb-3 opacity-75" style="background: var(--pp-gradient-main); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 0.8rem;">M</div>
+            <p class="text-muted fw-semibold small mb-1 lang-text" data-en="Powered by Mereb" data-am="በ መረብ የቀረበ">Powered by Mereb</p>
+            <p class="text-muted small mb-3 lang-text" data-en="Portfolio and reputation management for serious creators." data-am="ለፈጣሪዎች የተዘጋጀ የፖርትፎሊዮ እና የታማኝነት ማስተዳደሪያ።">Portfolio and reputation management for serious creators.</p>
+            <a href="/" class="btn btn-outline-primary btn-sm rounded-pill px-4 lang-text" data-en="Create your own page ↗" data-am="የራስዎን ገጽ ይፍጠሩ ↗">Create your own page ↗</a>
         </footer>
     </div>
 </main>

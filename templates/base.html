@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ProofPage{% endblock %}</title>
+    <title>{% block title %}Mereb{% endblock %}</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,5 +20,30 @@
 
     <!-- Bootstrap 5 JS Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Amharic/English Language Toggle System -->
+    <script>
+        function toggleLanguage() {
+            const currentLang = localStorage.getItem('rateMeLang') || 'en';
+            const newLang = currentLang === 'en' ? 'am' : 'en';
+            setLanguage(newLang);
+        }
+        function setLanguage(lang) {
+            localStorage.setItem('rateMeLang', lang);
+            document.documentElement.lang = lang;
+            document.querySelectorAll('.lang-text').forEach(el => {
+                if(el.hasAttribute('data-' + lang)) {
+                    el.innerHTML = el.getAttribute('data-' + lang);
+                }
+            });
+            document.querySelectorAll('.lang-toggle-btn').forEach(btn => {
+                btn.innerHTML = lang === 'en' ? '🇪🇹 አማርኛ' : '🇺🇸 English';
+            });
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('rateMeLang') || 'en';
+            setLanguage(savedLang);
+        });
+    </script>
 </body>
 </html>

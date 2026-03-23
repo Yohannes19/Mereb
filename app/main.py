@@ -281,6 +281,45 @@ def public_profile_page(slug: str, request: Request, db: Session = Depends(get_d
     )
 
 
+@app.get("/p/{slug}/review", response_class=HTMLResponse)
+def leave_review_page(slug: str, request: Request, db: Session = Depends(get_db)) -> HTMLResponse:
+    profile = db.query(models.Profile).filter_by(slug=slug).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    return templates.TemplateResponse(
+        request,
+        "leave_review.html",
+        {
+            "request": request,
+            "profile": profile,
+        },
+    )
+
+
+@app.post("/p/{slug}/review")
+def submit_public_review(
+    slug: str,
+    reviewer_name: str = Form(...),
+    reviewer_role: str = Form(""),
+    stars: int = Form(5),
+    testimonial: str = Form(...),
+    db: Session = Depends(get_db),
+) -> RedirectResponse:
+    profile = db.query(models.Profile).filter_by(slug=slug).first()
+    if not profile:
+        raise HTTPException(status_code=404, detail="Profile not found")
+    
+    services.add_rating(
+        db,
+        profile=profile,
+        reviewer_name=reviewer_name,
+        reviewer_role=reviewer_role or None,
+        stars=stars,
+        testimonial=testimonial,
+    )
+    return RedirectResponse(url=f"/p/{slug}/review?success=1", status_code=status.HTTP_303_SEE_OTHER)
+
+
 @app.post("/v1/proof", response_model=schemas.ProofItemResponse, status_code=status.HTTP_201_CREATED)
 def create_proof_api(
     payload: schemas.ProofItemCreate,

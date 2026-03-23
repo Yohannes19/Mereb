@@ -7,69 +7,70 @@
 </div>
 
 <div class="min-vh-100 d-flex flex-column fade-in-up stagger-1">
-    <nav class="p-4 w-100 position-absolute top-0 start-0 z-3 text-center text-md-start">
+    <nav class="p-4 w-100 position-absolute top-0 start-0 z-3 text-center text-md-start d-flex justify-content-between align-items-center">
         <a class="d-inline-flex align-items-center gap-2 text-decoration-none" href="/">
-            <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">P</div>
-            <span class="fs-6 fw-bold text-dark">ProofPage</span>
+            <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">M</div>
+            <span class="fs-6 fw-bold text-dark">Mereb</span>
         </a>
+        <button class="btn btn-sm btn-white rounded-pill px-3 shadow-sm lang-toggle-btn border" onclick="toggleLanguage()" style="font-size: 0.85rem; font-weight: bold;">🇪🇹 አማርኛ</button>
     </nav>
 
     <div class="flex-grow-1 d-flex align-items-center justify-content-center p-3 mt-5">
         <div class="glass-card p-4 p-md-5 w-100 my-4" style="max-width: 500px;">
             <div class="text-center mb-4">
-                <span class="badge badge-creative mb-2 px-3 py-1">Join the network</span>
-                <h1 class="h3 fw-bold mb-2">Claim your public profile</h1>
-                <p class="text-muted small">Showcase your verifiable work in less than a minute.</p>
+                <span class="badge badge-creative mb-2 px-3 py-1 lang-text" data-en="Join the network" data-am="ሰንሰለቱን ይቀላቀሉ">Join the network</span>
+                <h1 class="h3 fw-bold mb-2 lang-text" data-en="Claim your public profile" data-am="የህዝብ መገለጫዎን ይፍጠሩ">Claim your public profile</h1>
+                <p class="text-muted small lang-text" data-en="Showcase your verifiable work in less than a minute." data-am="በአጭር ጊዜ ውስጥ የተረጋገጠ ስራዎን ያሳዩ">Showcase your verifiable work in less than a minute.</p>
             </div>
 
             {% if request.query_params.get("exists") == "1" %}
-            <div class="alert alert-warning small py-2 px-3 fw-medium mb-4 d-flex align-items-center gap-2 border-0" style="background: rgba(245,158,11,0.1); color: #B45309; border-radius: var(--pp-rad-sm);">
+            <div class="alert alert-warning small py-2 px-3 fw-medium mb-4 d-flex align-items-center gap-2 border-0 lang-text" style="background: rgba(245,158,11,0.1); color: #B45309; border-radius: var(--pp-rad-sm);" data-en="<span>⚠️</span> An account with this email already exists. <a href='/auth/login' class='alert-link'>Log in instead</a>." data-am="<span>⚠️</span> በዚህ ኢሜል የተከፈተ መለያ አስቀድሞ አለ። <a href='/auth/login' class='alert-link'>በምትኩ ይግቡ</a>.">
                 <span>⚠️</span> An account with this email already exists. <a href="/auth/login" class="alert-link">Log in instead</a>.
             </div>
             {% endif %}
 
             <form action="/auth/register" method="POST">
                 <div class="mb-3">
-                    <label for="display_name" class="form-label">Brand or Display Name</label>
+                    <label for="display_name" class="form-label lang-text" data-en="Brand or Display Name" data-am="የትርዒት ስም (ብራንድ)">Brand or Display Name</label>
                     <input id="display_name" name="display_name" type="text" required class="form-control" placeholder="e.g. Muna Studio">
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
+                    <label for="email" class="form-label lang-text" data-en="Email address" data-am="የኢሜል አድራሻ">Email address</label>
                     <input id="email" name="email" type="email" autocomplete="email" required class="form-control" placeholder="you@example.com">
                 </div>
                 <div class="mb-4">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label lang-text" data-en="Password" data-am="የይለፍ ቃል">Password</label>
                     <input id="password" name="password" type="password" autocomplete="new-password" required class="form-control" placeholder="Create a strong password">
                 </div>
                 
                 <hr class="my-4" style="border-color: var(--pp-border-strong);">
-                <p class="small fw-semibold text-dark mb-3">Profile details (you can change these later)</p>
+                <p class="small fw-semibold text-dark mb-3 lang-text" data-en="Profile details (you can change these later)" data-am="የመገለጫ ዝርዝሮች (በኋላ መቀየር ይችላሉ)">Profile details (you can change these later)</p>
                 
                 <div class="row g-3 mb-4">
                     <div class="col-6">
-                        <label class="form-label">Account Type</label>
+                        <label class="form-label lang-text" data-en="Account Type" data-am="የመለያ አይነት">Account Type</label>
                         <select name="profile_type" class="form-select">
-                            <option value="creator">Creator</option>
-                            <option value="freelancer">Freelancer</option>
-                            <option value="business">Business / Agency</option>
+                            <option value="creator" class="lang-text" data-en="Creator" data-am="ፈጣሪ">Creator</option>
+                            <option value="freelancer" class="lang-text" data-en="Freelancer" data-am="ነፃ ሰራተኛ">Freelancer</option>
+                            <option value="business" class="lang-text" data-en="Business / Agency" data-am="ድርጅት / ኤጀንሲ">Business / Agency</option>
                         </select>
                     </div>
                     <div class="col-6">
-                        <label class="form-label">Niche</label>
+                        <label class="form-label lang-text" data-en="Niche" data-am="የስራ ዘርፍ">Niche</label>
                         <input type="text" name="niche" class="form-control" placeholder="e.g. Brand Design">
                     </div>
                     <div class="col-12">
-                        <label class="form-label">City</label>
+                        <label class="form-label lang-text" data-en="City" data-am="ከተማ">City</label>
                         <input type="text" name="city" class="form-control" placeholder="e.g. Addis Ababa" value="Addis Ababa">
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary w-100 py-2 fs-6">Create Free Account</button>
+                <button type="submit" class="btn btn-primary w-100 py-2 fs-6 lang-text" data-en="Create Free Account" data-am="የነፃ መለያ ይፍጠሩ">Create Free Account</button>
             </form>
 
             <p class="text-center small text-muted mt-4 mb-0">
-                Already have an account? 
-                <a href="/auth/login" class="text-decoration-none fw-bold" style="color: var(--pp-brand-1);">Sign in</a>
+                <span class="lang-text" data-en="Already have an account?" data-am="አስቀድመው መለያ አሎት?">Already have an account?</span> 
+                <a href="/auth/login" class="text-decoration-none fw-bold lang-text" style="color: var(--pp-brand-1);" data-en="Sign in" data-am="ይግቡ">Sign in</a>
             </p>
         </div>
     </div>
