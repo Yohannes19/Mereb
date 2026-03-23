@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}{{ profile.display_name }} | ProofPage{% endblock %}
+{% block body %}
+<!-- Ambient Dynamic Background -->
+<div class="ambient-bg" style="background: #FAFAFC;">
+    <div class="ambient-orb ambient-orb-1" style="opacity: 0.25;"></div>
+    <div class="ambient-orb ambient-orb-2" style="opacity: 0.15;"></div>
+    <div class="ambient-orb ambient-orb-3" style="opacity: 0.1;"></div>
+</div>
+
+<main class="min-vh-100 py-5">
+    <div class="container" style="max-width: 1000px;">
+        <!-- Premium Public Hero -->
+        <header class="mb-5 fade-in-up stagger-1">
+            <div class="glass-card p-5 p-md-5 overflow-hidden position-relative">
+                <!-- Abstract header decoration -->
+                <div class="position-absolute" style="top: -20%; right: -10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(110,86,255,0.08) 0%, rgba(110,86,255,0) 70%); border-radius: 50%;"></div>
+                
+                <div class="row align-items-center g-4 position-relative z-1">
+                    <div class="col-md-8 text-center text-md-start">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 mb-3">
+                            <span class="badge badge-creative rounded-pill">{{ profile.profile_type|upper }}</span>
+                            <span class="text-muted small fw-bold text-uppercase" style="letter-spacing: 0.12em;">Verified Portfolio</span>
+                        </div>
+                        <h1 class="display-4 fw-bold text-dark mb-3" style="line-height: 1.05;">{{ profile.display_name }}</h1>
+                        {% if profile.tagline %}
+                        <p class="lead fw-medium mb-3" style="color: var(--pp-brand-1); font-size: 1.25rem;">{{ profile.tagline }}</p>
+                        {% endif %}
+                        {% if profile.bio %}
+                        <p class="text-muted mb-4" style="max-width: 600px; line-height: 1.7;">{{ profile.bio }}</p>
+                        {% endif %}
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2">
+                            {% if profile.niche %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill">📍 {{ profile.niche }}</span>{% endif %}
+                            {% if profile.city %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill">🏙️ {{ profile.city }}</span>{% endif %}
+                            {% if profile.country %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill">🌍 {{ profile.country }}</span>{% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="d-flex flex-column gap-3 align-items-center align-items-md-end">
+                            <div class="text-center bg-white shadow-sm border px-4 py-3 rounded-4 w-100" style="max-width: 240px;">
+                                <div class="fs-2 mb-1">⭐</div>
+                                <h3 class="fw-bold mb-0 text-dark">{{ metrics.average_rating }} / 5</h3>
+                                <p class="small text-muted mb-0 fw-semibold">from {{ metrics.rating_count }} reviews</p>
+                            </div>
+                            
+                            <!-- Links -->
+                            <div class="d-flex gap-2 flex-wrap justify-content-center justify-content-md-end w-100" style="max-width: 240px;">
+                                {% if profile.website_url %}
+                                <a href="{{ profile.website_url }}" target="_blank" rel="noopener" class="btn btn-primary w-100 fw-semibold rounded-pill py-2 shadow-sm">Visit Website ↗</a>
+                                {% endif %}
+                                {% if profile.instagram_handle %}
+                                <a href="https://instagram.com/{{ profile.instagram_handle.strip('@') }}" target="_blank" rel="noopener" class="btn btn-white w-100 rounded-pill py-2 text-decoration-none">📸 {{ profile.instagram_handle }}</a>
+                                {% endif %}
+                                {% if profile.tiktok_handle %}
+                                <a href="https://tiktok.com/@{{ profile.tiktok_handle.strip('@') }}" target="_blank" rel="noopener" class="btn btn-white w-100 rounded-pill py-2 text-decoration-none">🎬 {{ profile.tiktok_handle }}</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Portfolio Work -->
+        <section class="mb-5 pb-4 fade-in-up stagger-2">
+            <div class="d-flex align-items-end justify-content-between mb-4">
+                <div>
+                    <span class="badge badge-creative mb-2">Portfolio</span>
+                    <h2 class="display-6 fw-bold mb-0">Verified Work</h2>
+                </div>
+                <div class="bg-white px-3 py-2 rounded-pill shadow-sm border fw-bold text-dark d-none d-sm-block">
+                    {{ metrics.proof_count }} Projects
+                </div>
+            </div>
+
+            <div class="d-flex flex-column gap-5">
+                {% for item in proof_items %}
+                <article class="glass-card overflow-hidden">
+                    {% if item.image_url %}
+                    <div class="w-100" style="height: 300px; background: url('{{ item.image_url }}') center/cover no-repeat; border-bottom: 1px solid var(--pp-border);"></div>
+                    {% endif %}
+                    <div class="p-4 p-md-5">
+                        <div class="d-flex flex-column flex-md-row align-items-md-start justify-content-between gap-3 mb-4">
+                            <div>
+                                <h3 class="h4 fw-bold text-dark mb-2">{{ item.title }}</h3>
+                                <p class="small fw-semibold text-muted mb-0 text-uppercase" style="letter-spacing: 0.05em;">
+                                    <span style="color: var(--pp-brand-1);">{{ item.category }}</span> • {{ item.client_name or profile.display_name }}
+                                </p>
+                            </div>
+                            {% if item.result_metric %}
+                            <div class="badge rounded-pill shadow-sm px-4 py-2 fs-6" style="background: var(--pp-gradient-main); color: var(--pp-ink-dark);">
+                                📈 {{ item.result_metric }}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <p class="text-muted mb-4 fs-6" style="line-height: 1.8;">{{ item.summary }}</p>
+                        
+                        <div class="d-flex flex-wrap align-items-center gap-3">
+                            {% if item.verification_note %}
+                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill small fw-semibold">
+                                ✓ Verified: {{ item.verification_note }}
+                            </span>
+                            {% endif %}
+                            {% if item.proof_url %}
+                            <a href="{{ item.proof_url }}" target="_blank" rel="noopener" class="btn btn-outline-primary rounded-pill btn-sm px-4 fw-semibold">
+                                View Live Project ↗
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </article>
+                {% else %}
+                <div class="glass-card p-5 text-center">
+                    <span class="fs-1 opacity-50 mb-3 block">📁</span>
+                    <h4 class="fw-bold mb-1">No portfolio items yet</h4>
+                    <p class="text-muted">This profile hasn't published verifiable work yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="mb-5 fade-in-up stagger-3">
+            <div class="text-center mb-5">
+                <span class="badge badge-creative mb-2">Social Proof</span>
+                <h2 class="display-6 fw-bold mb-0">Client Reviews</h2>
+            </div>
+            
+            <div class="row g-4">
+                {% for item in ratings %}
+                <div class="col-md-6 col-lg-4">
+                    <article class="glass-card h-100 p-4">
+                        <div class="text-warning mb-3 fs-5">
+                            {% for i in range(item.stars) %}★{% endfor %}
+                        </div>
+                        <p class="text-dark fst-italic mb-4" style="line-height: 1.6;">"{{ item.testimonial }}"</p>
+                        <hr style="border-color: var(--pp-border-strong);">
+                        <div>
+                            <p class="fw-bold text-dark mb-0">— {{ item.reviewer_name }}</p>
+                            <p class="small text-muted fw-semibold mb-0">{{ item.reviewer_role or 'Client' }}</p>
+                        </div>
+                    </article>
+                </div>
+                {% else %}
+                <div class="col-12 text-center py-4">
+                    <p class="text-muted mb-0">Client reviews will appear here once published.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="pt-5 mt-5 border-top d-flex flex-column align-items-center text-center fade-in-up stagger-4" style="border-color: rgba(0,0,0,0.05) !important;">
+            <div class="brand-logomark mb-3 opacity-75" style="background: var(--pp-gradient-main); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 0.8rem;">P</div>
+            <p class="text-muted fw-semibold small mb-1">Powered by ProofPage</p>
+            <p class="text-muted small mb-3">Portfolio and reputation management for serious creators.</p>
+            <a href="/" class="btn btn-outline-primary btn-sm rounded-pill px-4">Create your own page ↗</a>
+        </footer>
+    </div>
+</main>
+{% endblock %}

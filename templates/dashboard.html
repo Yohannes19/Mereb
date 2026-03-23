@@ -1,0 +1,371 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | ProofPage{% endblock %}
+{% block body %}
+<!-- App-like ambient background -->
+<div class="ambient-bg" style="background: #F4F4F9;">
+    <div class="ambient-orb ambient-orb-1" style="opacity: 0.3;"></div>
+    <div class="ambient-orb ambient-orb-2" style="opacity: 0.2;"></div>
+</div>
+
+<div class="min-vh-100 d-flex flex-column fade-in-up stagger-1">
+    <!-- Floating App Header -->
+    <header class="pt-3 px-3 w-100 z-3">
+        <div class="container-fluid max-w-7xl mx-auto glass-card d-flex align-items-center justify-content-between px-4 py-3" style="border-radius: var(--pp-rad-pill);">
+            <div class="d-flex align-items-center gap-3">
+                <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
+                    <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">P</div>
+                    <span class="fs-5 fw-bold d-none d-sm-block" style="color: var(--pp-ink-dark); letter-spacing: -0.02em;">ProofPage</span>
+                </a>
+                <div class="px-3" style="border-left: 2px solid var(--pp-border-strong);">
+                    <span class="small fw-semibold text-muted d-none d-md-block">Workspace / <span style="color: var(--pp-brand-1);">@{{ profile.slug }}</span></span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-2 gap-sm-3">
+                <button type="button" class="btn btn-white btn-sm px-3 rounded-pill d-none d-md-flex align-items-center gap-2" id="dashCopyUrl">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy Link
+                </button>
+                <a href="/p/{{ profile.slug }}" target="_blank" rel="noopener" class="btn btn-primary d-flex align-items-center gap-2 px-3 btn-sm">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <span class="d-none d-sm-inline">Preview</span>
+                </a>
+                <form method="post" action="/auth/logout" class="m-0 ms-1">
+                    <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill px-3" style="border: none; background: rgba(244,63,94,0.1); color: var(--pp-brand-3);">Log out</button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow-1 py-4 px-3 w-100 fade-in-up stagger-2">
+        <div class="row g-4 mx-auto max-w-7xl" style="max-width: 1200px;">
+            <!-- Sidebar Navigation -->
+            <div class="col-lg-3 col-xl-2">
+                <div class="glass-card p-4 h-100 position-sticky" style="top: 100px;">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <div class="rounded-circle overflow-hidden shadow-sm" style="width: 48px; height: 48px; background: linear-gradient(135deg, #e2e8f0, #cbd5e1); border: 2px solid white;"></div>
+                        <div>
+                            <p class="fw-bold mb-0 text-truncate" style="max-width: 120px;">{{ profile.display_name }}</p>
+                            <span class="badge badge-creative rounded-pill mt-1 py-1 px-2" style="font-size: 0.65rem;">{{ profile.profile_type|title }}</span>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4" style="border-color: var(--pp-border-strong);">
+
+                    <nav class="nav nav-pills flex-column gap-2 pp-clean-tabs" id="dashboardTabs" role="tablist">
+                        <button class="nav-link w-100 text-start d-flex align-items-center gap-2 {% if not request.query_params.get('proof') and not request.query_params.get('rating') %}active{% endif %}" style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-profile-tab" data-bs-toggle="tab" data-bs-target="#pills-profile" type="button" role="tab">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            Profile Details
+                        </button>
+                        <button class="nav-link w-100 text-start d-flex align-items-center gap-2 {% if request.query_params.get('proof') %}active{% endif %}" style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-proof-tab" data-bs-toggle="tab" data-bs-target="#pills-proof" type="button" role="tab">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            Portfolio Proof
+                        </button>
+                        <button class="nav-link w-100 text-start d-flex align-items-center gap-2 {% if request.query_params.get('rating') %}active{% endif %}" style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-rating-tab" data-bs-toggle="tab" data-bs-target="#pills-rating" type="button" role="tab">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            Testimonials
+                        </button>
+                        <button class="nav-link w-100 text-start d-flex align-items-center gap-2" style="border: none !important; border-radius: var(--pp-rad-sm);" id="pills-feed-tab" data-bs-toggle="tab" data-bs-target="#pills-feed" type="button" role="tab">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            Activity Feed
+                        </button>
+                    </nav>
+
+                    <style>
+                        .nav-link.active {
+                            background: var(--pp-gradient-main) !important;
+                            color: var(--pp-ink-dark) !important;
+                            box-shadow: var(--pp-shadow-md);
+                        }
+                    </style>
+
+                    <!-- Mini Stats in Sidebar -->
+                    <div class="mt-5 pt-3 border-top" style="border-color: var(--pp-border-strong) !important;">
+                        <p class="text-uppercase small fw-bold text-muted mb-3" style="letter-spacing: 0.1em;">Quick Stats</p>
+                        <div class="d-flex flex-column gap-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small fw-medium text-muted">Projects</span>
+                                <span class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{ metrics.proof_count }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small fw-medium text-muted">Reviews</span>
+                                <span class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{ metrics.rating_count }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small fw-medium text-muted">Avg Rating</span>
+                                <span class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{ metrics.average_rating }} ★</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Workspace Area -->
+            <div class="col-lg-9 col-xl-10">
+                {% if audit.improvements %}
+                <div class="glass-card mb-4 p-3 d-flex align-items-center justify-content-between border-start border-4 fade-in-up stagger-3" style="border-color: var(--pp-brand-3) !important; background: rgba(255,255,255,0.8);">
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger bg-opacity-10 text-danger" style="width: 36px; height: 36px;">🔔</div>
+                        <div>
+                            <p class="mb-0 fw-bold fs-6">Complete your profile</p>
+                            <p class="mb-0 small text-muted">{{ audit.improvements[0] }}</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm rounded-pill" onclick="document.getElementById('pills-profile-tab').click()">Fix now</button>
+                </div>
+                {% endif %}
+
+                <div class="tab-content" id="dashboardTabsContent">
+                    <!-- Profile Tab -->
+                    <div class="tab-pane fade {% if not request.query_params.get('proof') and not request.query_params.get('rating') %}show active{% endif %}" id="pills-profile" role="tabpanel">
+                        <div class="glass-card p-4 p-md-5 fade-in-up">
+                            <div class="mb-5 pb-3 border-bottom border-light">
+                                <h2 class="h3 fw-bold mb-2">Profile Details</h2>
+                                <p class="text-muted mb-0">Customize how you appear on your stunning public page.</p>
+                            </div>
+
+                            {% if request.query_params.get("profile") == "1" %}
+                            <div class="alert alert-success d-flex align-items-center gap-2 border-0 mb-4" style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
+                                <span class="fs-5">✨</span> Profile saved beautifully.
+                            </div>
+                            {% endif %}
+
+                            <form method="post" action="/dashboard/profile">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Display Name</label>
+                                        <input name="display_name" type="text" value="{{ profile.display_name }}" class="form-control" required placeholder="Your name or brand">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Profile Type</label>
+                                        <select name="profile_type" class="form-select">
+                                            <option value="creator" {% if profile.profile_type == "creator" %}selected{% endif %}>Creator</option>
+                                            <option value="business" {% if profile.profile_type == "business" %}selected{% endif %}>Business</option>
+                                            <option value="freelancer" {% if profile.profile_type == "freelancer" %}selected{% endif %}>Freelancer</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Punchy Tagline</label>
+                                        <input name="tagline" type="text" value="{{ profile.tagline or '' }}" class="form-control" placeholder="E.g. Elevating brands through pixel-perfect design">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Professional Bio</label>
+                                        <textarea name="bio" rows="4" class="form-control" placeholder="Tell your story. Why should clients trust you?">{{ profile.bio or '' }}</textarea>
+                                    </div>
+                                </div>
+
+                                <h3 class="h5 fw-bold mt-5 mb-4">Location & Speciality</h3>
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <label class="form-label">Niche</label>
+                                        <input name="niche" type="text" value="{{ profile.niche or '' }}" class="form-control" placeholder="e.g. Brand Design">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">City</label>
+                                        <input name="city" type="text" value="{{ profile.city or '' }}" class="form-control" placeholder="e.g. New York">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-label">Country</label>
+                                        <input name="country" type="text" value="{{ profile.country }}" class="form-control" placeholder="e.g. United States">
+                                    </div>
+                                </div>
+
+                                <h3 class="h5 fw-bold mt-5 mb-4">Connections</h3>
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Website URL</label>
+                                        <input name="website_url" type="url" value="{{ profile.website_url or '' }}" placeholder="https://" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Instagram</label>
+                                        <input name="instagram_handle" type="text" value="{{ profile.instagram_handle or '' }}" placeholder="@handle" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">TikTok</label>
+                                        <input name="tiktok_handle" type="text" value="{{ profile.tiktok_handle or '' }}" placeholder="@handle" class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Telegram</label>
+                                        <input name="telegram_handle" type="text" value="{{ profile.telegram_handle or '' }}" placeholder="@handle" class="form-control">
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary px-5 shadow-lg">Save Profile</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Proof Tab -->
+                    <div class="tab-pane fade {% if request.query_params.get('proof') %}show active{% endif %}" id="pills-proof" role="tabpanel">
+                        <div class="glass-card p-4 p-md-5">
+                            <div class="mb-5 pb-3 border-bottom border-light">
+                                <h2 class="h3 fw-bold mb-2">Add Portfolio Proof</h2>
+                                <p class="text-muted mb-0">Publish undeniable evidence of your best work.</p>
+                            </div>
+
+                            {% if request.query_params.get("proof") == "1" %}
+                            <div class="alert alert-success d-flex align-items-center gap-2 border-0 mb-4" style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
+                                <span class="fs-5">🎉</span> Project successfully published!
+                            </div>
+                            {% endif %}
+
+                            <form method="post" action="/dashboard/proof">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Project Title</label>
+                                        <input name="title" type="text" class="form-control" required placeholder="e.g., Brand Identity Redesign">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Client / Brand</label>
+                                        <input name="client_name" type="text" class="form-control" placeholder="e.g., Acme Corp (optional)">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Category</label>
+                                        <select name="category" class="form-select">
+                                            <option value="campaign">Campaign</option>
+                                            <option value="design">Design</option>
+                                            <option value="video">Video</option>
+                                            <option value="service">Service</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Killer Result Metric</label>
+                                        <input name="result_metric" type="text" placeholder="e.g., +40% Conversion, $5K ROI" class="form-control fw-semibold" style="color: var(--pp-brand-1);">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Impact Summary</label>
+                                        <textarea name="summary" rows="4" class="form-control" required placeholder="Describe the challenge and your creative solution..."></textarea>
+                                    </div>
+                                </div>
+
+                                <h3 class="h5 fw-bold mt-5 mb-4">Evidence Links</h3>
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Live Link / Proof URL</label>
+                                        <input name="proof_url" type="url" placeholder="https://..." class="form-control">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Stunning Cover Image URL</label>
+                                        <input name="image_url" type="url" placeholder="https://..." class="form-control">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Verification Note (Optional)</label>
+                                        <input name="verification_note" type="text" placeholder="e.g., Verified by live traffic data..." class="form-control">
+                                    </div>
+                                </div>
+                                <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary px-5 shadow-lg">Publish Project</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Rating Form Tab -->
+                    <div class="tab-pane fade {% if request.query_params.get('rating') %}show active{% endif %}" id="pills-rating" role="tabpanel">
+                        <div class="glass-card p-4 p-md-5">
+                            <div class="mb-5 pb-3 border-bottom border-light">
+                                <h2 class="h3 fw-bold mb-2">Add Client Testimonial</h2>
+                                <p class="text-muted mb-0">Record what your clients say about your stellar work.</p>
+                            </div>
+
+                            {% if request.query_params.get("rating") == "1" %}
+                            <div class="alert alert-success d-flex align-items-center gap-2 border-0 mb-4" style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
+                                <span class="fs-5">💬</span> Testimonial glowing beautifully on your profile.
+                            </div>
+                            {% endif %}
+
+                            <form method="post" action="/dashboard/ratings">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label class="form-label">Client Name</label>
+                                        <input name="reviewer_name" type="text" class="form-control" required placeholder="Full name">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label">Client Title / Company</label>
+                                        <input name="reviewer_role" type="text" placeholder="e.g., CEO at Acme Inc." class="form-control">
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Star Rating</label>
+                                        <select name="stars" class="form-select fs-5">
+                                            <option value="5">⭐⭐⭐⭐⭐ Outstanding (5)</option>
+                                            <option value="4">⭐⭐⭐⭐ Excellent (4)</option>
+                                            <option value="3">⭐⭐⭐ Good (3)</option>
+                                            <option value="2">⭐⭐ Fair (2)</option>
+                                            <option value="1">⭐ Poor (1)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label">Exact Quote</label>
+                                        <textarea name="testimonial" rows="4" class="form-control fs-5 fst-italic" required placeholder='"Working with them was the best investment we made..."'></textarea>
+                                    </div>
+                                </div>
+                                <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary px-5 shadow-lg">Save Testimonial</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Activity Feed Tab -->
+                    <div class="tab-pane fade" id="pills-feed" role="tabpanel">
+                        <div class="glass-card p-4 p-md-5">
+                            <div class="mb-5 pb-3 border-bottom border-light">
+                                <h2 class="h3 fw-bold mb-2">Live Activity Feed</h2>
+                                <p class="text-muted mb-0">Your recently published proof items.</p>
+                            </div>
+
+                            <div class="d-flex flex-column gap-3">
+                                {% for item in proof_items %}
+                                <div class="p-4 rounded-4 position-relative overflow-hidden mb-2" style="background: rgba(255,255,255,0.7); box-shadow: var(--pp-shadow-sm); border: 1px solid var(--pp-border-strong); transition: transform 0.2s;">
+                                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
+                                        <div class="pe-md-4">
+                                            <div class="d-flex align-items-center gap-2 mb-2">
+                                                <span class="badge badge-creative rounded-pill py-1">{{ item.category|upper }}</span>
+                                                <span class="small text-muted fw-semibold">{{ item.created_at.strftime("%b %d, %Y") }}</span>
+                                            </div>
+                                            <h4 class="h5 fw-bold text-dark mb-2">{{ item.title }}</h4>
+                                            <p class="text-muted small mb-0">{{ item.summary }}</p>
+                                        </div>
+                                        {% if item.result_metric %}
+                                        <div class="flex-shrink-0">
+                                            <span class="badge px-3 py-2 rounded-pill fs-6 shadow-sm" style="background: var(--pp-gradient-main); color: var(--pp-ink-dark);">{{ item.result_metric }}</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% else %}
+                                <div class="text-center py-5">
+                                    <div class="mb-3 fs-1 opacity-50">📁</div>
+                                    <h4 class="fw-bold mb-2">No projects yet</h4>
+                                    <p class="text-muted mb-4">Start building your verified portfolio.</p>
+                                    <button type="button" class="btn btn-outline-primary shadow-sm" onclick="document.getElementById('pills-proof-tab').click()">Add your first project</button>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const copyBtn = document.getElementById("dashCopyUrl");
+        if (copyBtn) {
+            const originalContent = copyBtn.innerHTML;
+            copyBtn.addEventListener("click", function () {
+                var url = window.location.origin + "/p/{{ profile.slug }}";
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(url).then(function () {
+                        copyBtn.innerHTML = '<span class="text-success fw-bold">✓ Copied!</span>';
+                        setTimeout(() => copyBtn.innerHTML = originalContent, 2000);
+                    });
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

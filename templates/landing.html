@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+{% block title %}ProofPage | Verified Professional Work{% endblock %}
+{% block body %}
+<!-- Ambient Animated Background -->
+<div class="ambient-bg">
+    <div class="ambient-orb ambient-orb-1"></div>
+    <div class="ambient-orb ambient-orb-2"></div>
+    <div class="ambient-orb ambient-orb-3"></div>
+</div>
+
+<div class="lp-wrapper fade-in-up stagger-1">
+    <!-- Glassmorphism Navbar -->
+    <nav class="navbar navbar-expand-lg pp-nav">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">P</div>
+                <span class="fs-5 fw-bold" style="color: var(--pp-ink-dark); letter-spacing: -0.02em;">ProofPage</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#lpNav" aria-controls="lpNav" aria-expanded="false" aria-label="Menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="lpNav">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 gap-lg-3">
+                    <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#proof">What to include</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#who">Who it's for</a></li>
+                </ul>
+                <div class="d-flex flex-column flex-sm-row gap-3 align-items-center">
+                    <a href="/auth/login" class="text-decoration-none fw-semibold" style="color: var(--pp-ink-base); transition: 0.2s;">Log in</a>
+                    <a href="/auth/register" class="btn btn-primary btn-sm px-4">Create Profile</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1">
+        <!-- Hero Section -->
+        <section class="py-5 mt-4 mt-md-5 text-center px-3 fade-in-up stagger-2">
+            <div class="container">
+                <span class="badge badge-creative mb-4 px-3 py-2">For creators & independent professionals</span>
+                <h1 class="display-3 fw-bold mb-4" style="line-height: 1.1; max-width: 900px; margin: 0 auto; letter-spacing: -0.04em;">
+                    One link that shows <br/>
+                    <span class="text-gradient">real work</span>, not just claims.
+                </h1>
+                <p class="lead mb-5 mx-auto" style="max-width: 650px; color: var(--pp-ink-muted); font-size: 1.25rem;">
+                    ProofPage gives you a breathtaking public page for your portfolio, verifiable outcomes, and client testimonials. Let your work speak volumes.
+                </p>
+                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                    <a href="/auth/register" class="btn btn-primary btn-lg px-5">Start for free</a>
+                    <a href="/p/muna-studio" class="btn btn-white btn-lg px-5 text-decoration-none">View example</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Floating Preview Showcase -->
+        <section class="py-4 py-md-5 fade-in-up stagger-3">
+            <div class="container position-relative">
+                <div class="glass-card mx-auto p-2" style="max-width: 900px; transform: perspective(1000px) rotateX(2deg); transform-style: preserve-3d; box-shadow: var(--pp-shadow-glow);">
+                    <div class="d-flex align-items-center gap-2 p-3 bg-white bg-opacity-50 border-bottom" style="border-radius: var(--pp-rad-md) var(--pp-rad-md) 0 0;">
+                        <div class="d-flex gap-2">
+                            <span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F56;"></span>
+                            <span style="width: 12px; height: 12px; border-radius: 50%; background: #FFBD2E;"></span>
+                            <span style="width: 12px; height: 12px; border-radius: 50%; background: #27C93F;"></span>
+                        </div>
+                        <div class="flex-grow-1 text-center small fw-semibold text-muted" style="font-family: monospace;">proofpage.et/p/muna-studio</div>
+                    </div>
+                    <div class="p-4 p-md-5 bg-white bg-opacity-75" style="border-radius: 0 0 var(--pp-rad-md) var(--pp-rad-md);">
+                        <div class="d-flex align-items-center gap-4 mb-5">
+                            <div style="width: 80px; height: 80px; border-radius: 50%; background: var(--pp-gradient-main); padding: 3px;">
+                                <div style="width: 100%; height: 100%; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem;">👩🏽‍🎨</div>
+                            </div>
+                            <div>
+                                <h3 class="mb-1 fw-bold text-dark">Muna Studio</h3>
+                                <p class="mb-0 text-muted fw-medium">Brand Design • Addis Ababa</p>
+                                <div class="mt-2 d-flex gap-2">
+                                    <span class="badge bg-light text-dark border px-2 py-1 rounded-pill">32 Projects</span>
+                                    <span class="badge bg-light text-dark border px-2 py-1 rounded-pill">4.9 ★ Rating</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="p-4 rounded-4" style="background: rgba(244,63,94,0.05); border: 1px dashed rgba(244,63,94,0.2);">
+                                    <h5 class="fw-bold mb-2">Rebranding Acme Corp</h5>
+                                    <p class="small text-muted mb-3">Complete identity overhaul resulting in a 40% increase in user engagement.</p>
+                                    <span class="badge bg-white text-danger border border-danger border-opacity-25 rounded-pill px-3 py-1">📈 +40% Engagement</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-4 rounded-4" style="background: rgba(56,189,248,0.05); border: 1px dashed rgba(56,189,248,0.2);">
+                                    <h5 class="fw-bold mb-2">“Muna is exceptional.”</h5>
+                                    <p class="small text-muted mb-0">"She delivered the project ahead of time and the quality was stunning."</p>
+                                    <div class="mt-3 small fw-bold">— Sarah J., CEO</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how" class="py-5 mt-5">
+            <div class="container px-4">
+                <div class="text-center mb-5 fade-in-up stagger-1">
+                    <span class="badge badge-creative mb-3">The Process</span>
+                    <h2 class="display-5 fw-bold">Three steps to instant trust.</h2>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-4 fade-in-up stagger-2">
+                        <div class="glass-card h-100 p-4 p-lg-5 text-center">
+                            <div class="mb-4 mx-auto d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; border-radius: 20px; background: var(--pp-bg); color: var(--pp-brand-1); font-size: 1.5rem; font-weight: 800; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">1</div>
+                            <h3 class="h4 fw-bold mb-3">Set up profile</h3>
+                            <p class="text-muted">Name, niche, city, and a short bio so visitors immediately understand what you do and who you help.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 fade-in-up stagger-3">
+                        <div class="glass-card h-100 p-4 p-lg-5 text-center">
+                            <div class="mb-4 mx-auto d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; border-radius: 20px; background: var(--pp-bg); color: var(--pp-brand-2); font-size: 1.5rem; font-weight: 800; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">2</div>
+                            <h3 class="h4 fw-bold mb-3">Add proof items</h3>
+                            <p class="text-muted">Concrete projects, verifiable outcomes, links, and optional notes so the work feels undeniable.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 fade-in-up stagger-4">
+                        <div class="glass-card h-100 p-4 p-lg-5 text-center">
+                            <div class="mb-4 mx-auto d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; border-radius: 20px; background: var(--pp-bg); color: var(--pp-brand-3); font-size: 1.5rem; font-weight: 800; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">3</div>
+                            <h3 class="h4 fw-bold mb-3">Share testimonials</h3>
+                            <p class="text-muted">Collect verified ratings and quotes so trust sits beautifully right next to your best work.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-5 my-5 fade-in-up stagger-2">
+            <div class="container">
+                <div class="glass-card p-5 text-center position-relative overflow-hidden" style="border: 1px solid var(--pp-border-glow);">
+                    <div class="position-absolute" style="top: -50%; left: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(110,86,255,0.2) 0%, rgba(110,86,255,0) 70%); z-index: 0;"></div>
+                    <div class="position-absolute" style="bottom: -50%; right: -10%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(56,189,248,0.2) 0%, rgba(56,189,248,0) 70%); z-index: 0;"></div>
+                    
+                    <div class="position-relative z-1">
+                        <h2 class="display-5 fw-bold mb-4">Ready when your next client asks for proof?</h2>
+                        <p class="lead mb-5 mx-auto text-muted" style="max-width: 600px;">Create your breathtaking portfolio page, add your best verifiable work, and share one powerful link.</p>
+                        <a href="/auth/register" class="btn btn-primary btn-lg px-5 shadow-lg">Claim Your Profile Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-4 text-center glass-card border-0 rounded-0 border-top mt-auto" style="box-shadow: none;">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+            <p class="small text-muted mb-0 fw-medium">&copy; 2026 ProofPage. All rights reserved.</p>
+            <div class="d-flex gap-4 small fw-semibold">
+                <a href="#how" class="text-decoration-none text-muted">How it works</a>
+                <a href="/auth/login" class="text-decoration-none text-muted">Log in</a>
+                <a href="/auth/register" class="text-decoration-none" style="color: var(--pp-brand-1);">Sign up for free</a>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}
