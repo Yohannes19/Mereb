@@ -1,0 +1,17 @@
+{
+  "name": "Mereb",
+  "short_name": "Mereb",
+  "description": "Verified portfolio and reputation management for creators.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAFAFC",
+  "theme_color": "#6e56ff",
+  "icons": [
+    {
+      "src": "/static/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

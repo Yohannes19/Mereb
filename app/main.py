@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 
 app = FastAPI(
-    title="ProofPage",
+    title="Mereb",
     description="Public proof profiles for Ethiopian creators and small businesses.",
     version="0.1.0",
 )
@@ -24,7 +24,12 @@ app.add_middleware(SessionMiddleware, secret_key="dev-session-secret-change-me")
 static_dir = BASE_DIR / "static"
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
-Base.metadata.create_all(bind=engine)
+@app.on_event("startup")
+def on_startup():
+    # Only create tables if we are not in a test (though TestClient usually respects overrides)
+    # This is a safety measure for the production engine
+    from app.database import engine
+    Base.metadata.create_all(bind=engine)
 
 
 def proof_response(item: models.ProofItem) -> schemas.ProofItemResponse:
@@ -264,6 +269,11 @@ def public_profile_page(slug: str, request: Request, db: Session = Depends(get_d
     profile = db.query(models.Profile).filter_by(slug=slug).first()
     if not profile:
         raise HTTPException(status_code=404, detail="Profile not found")
+    
+    # Increment view count
+    profile.view_count += 1
+    db.commit()
+
     profile = services.ensure_profile_defaults(db, profile=profile)
     metrics = services.build_dashboard_metrics(profile)
     proof_items = sorted(profile.proof_items, key=lambda item: item.created_at, reverse=True)

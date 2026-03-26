@@ -83,7 +83,7 @@ def get_or_create_demo_profile(db: Session) -> models.Profile:
         category="campaign",
         summary="Created a launch reel and short story sequence for a beauty drop campaign.",
         result_metric="12,400 views in 4 days",
-        proof_url="https://instagram.com/",
+        proof_url="https://www.youtube.com/watch?v=dQw4w9WgXcQ",
         image_url="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80",
         verification_note="Client confirmed delivery and publish date.",
     )

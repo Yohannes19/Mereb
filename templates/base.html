@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#6e56ff">
+    <link rel="manifest" href="/static/manifest.json">
+    <link rel="apple-touch-icon" href="/static/icons/icon-512.png">
     <title>{% block title %}Mereb{% endblock %}</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,6 +47,15 @@
             const savedLang = localStorage.getItem('rateMeLang') || 'en';
             setLanguage(savedLang);
         });
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/static/sw.js')
+                    .then(reg => console.log('Mereb PWA Registered'))
+                    .catch(err => console.log('PWA Registration Failed', err));
+            });
+        }
     </script>
 </body>
 </html>

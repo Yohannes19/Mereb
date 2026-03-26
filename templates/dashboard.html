@@ -8,54 +8,142 @@
 </div>
 
 <div class="min-vh-100 d-flex flex-column fade-in-up stagger-1">
-    <!-- Floating App Header -->
-    <header class="pt-3 px-3 w-100 z-3">
-        <div class="container-fluid max-w-7xl mx-auto glass-card d-flex align-items-center justify-content-between px-4 py-3"
-            style="border-radius: var(--pp-rad-pill);">
-            <div class="d-flex align-items-center gap-3">
-                <a href="/" class="d-flex align-items-center gap-2 text-decoration-none">
-                    <div class="brand-logomark"
-                        style="background: var(--pp-gradient-main); width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">
-                        M</div>
-                    <span class="fs-5 fw-bold d-none d-sm-block"
-                        style="color: var(--pp-ink-dark); letter-spacing: -0.02em;">Mereb</span>
-                </a>
-                <div class="px-3" style="border-left: 2px solid var(--pp-border-strong);">
-                    <span class="small fw-semibold text-muted d-none d-md-block">Workspace / <span
-                            style="color: var(--pp-brand-1);">@{{ profile.slug }}</span></span>
+    <!-- Professional Navbar -->
+    <nav class="pp-navbar" aria-label="Main navigation">
+        <div class="pp-navbar-inner">
+
+            <!-- Left: Brand -->
+            <a href="/" class="pp-navbar-brand" aria-label="Mereb Home">
+                <div class="pp-brand-icon" aria-hidden="true">
+                    <img src="/static/icons/icon-512.png" alt="Mereb" width="28" height="28"
+                        style="border-radius: 7px; object-fit: cover;"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <span
+                        style="display:none; width:28px; height:28px; border-radius:7px; background:var(--pp-gradient-main); align-items:center; justify-content:center; color:var(--pp-ink-dark); font-weight:800; font-size:1rem;">M</span>
                 </div>
+                <span class="pp-navbar-brand-name">Mereb</span>
+            </a>
+
+            <!-- Center: Workspace slug (desktop) -->
+            <div class="pp-navbar-workspace d-none d-md-flex">
+                <span class="pp-workspace-label">Workspace</span>
+                <span class="pp-workspace-sep">/</span>
+                <span class="pp-workspace-slug">@{{ profile.slug }}</span>
             </div>
-            <div class="d-flex align-items-center gap-2 gap-sm-3">
-                <button type="button"
-                    class="btn btn-white btn-sm px-3 rounded-pill d-none d-md-flex align-items-center gap-2"
-                    id="dashCopyUrl">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                    </svg>
-                    Copy Link
-                </button>
-                <a href="/p/{{ profile.slug }}" target="_blank" rel="noopener"
-                    class="btn btn-primary d-flex align-items-center gap-2 px-3 btn-sm">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+
+            <!-- Right: Actions -->
+            <div class="pp-navbar-actions">
+                <!-- Primary CTA: View Public Profile -->
+                <a href="/p/{{ profile.slug }}" target="_blank" rel="noopener" class="pp-btn-primary-cta"
+                    aria-label="View your public profile">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        aria-hidden="true">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                         <circle cx="12" cy="12" r="3"></circle>
                     </svg>
-                    <span class="d-none d-sm-inline lang-text" data-en="Preview" data-am="እይታ">Preview</span>
+                    <span class="d-none d-sm-inline lang-text" data-en="View Profile" data-am="መገለጫ እይታ">View
+                        Profile</span>
                 </a>
-                <button class="btn btn-sm btn-white rounded-pill px-3 shadow-sm lang-toggle-btn border ms-1" onclick="toggleLanguage()" style="font-size: 0.85rem; font-weight: bold;">🇪🇹 አማርኛ</button>
-                <form method="post" action="/auth/logout" class="m-0 ms-1">
-                    <button type="submit" class="btn btn-outline-primary btn-sm rounded-pill px-3 lang-text"
-                        style="border: none; background: rgba(244,63,94,0.1); color: var(--pp-brand-3);" data-en="Log out" data-am="ውጣ">Log out</button>
-                </form>
+
+                <!-- Kebab / More options dropdown -->
+                <div class="pp-dropdown" id="navMoreDropdown">
+                    <button class="pp-kebab-btn" onclick="toggleNavDropdown()" aria-haspopup="true"
+                        aria-expanded="false" id="navKebabBtn" aria-label="More options">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <circle cx="12" cy="5" r="1.5"></circle>
+                            <circle cx="12" cy="12" r="1.5"></circle>
+                            <circle cx="12" cy="19" r="1.5"></circle>
+                        </svg>
+                    </button>
+                    <div class="pp-dropdown-menu" id="navDropdownMenu" role="menu" aria-hidden="true">
+
+                        <!-- Mobile-only: Section Navigation -->
+                        <div class="d-md-none">
+                            <div class="pp-dropdown-section-header">Navigate</div>
+                            <button class="pp-dropdown-item pp-dropdown-item--nav" role="menuitem"
+                                onclick="showTab('pills-profile-tab'); closeNavDropdown();">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <span class="lang-text" data-en="Profile" data-am="መገለጫ">Profile</span>
+                            </button>
+                            <button class="pp-dropdown-item pp-dropdown-item--nav" role="menuitem"
+                                onclick="showTab('pills-proof-tab'); closeNavDropdown();">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <path
+                                        d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+                                    </path>
+                                </svg>
+                                <span class="lang-text" data-en="Portfolio" data-am="ፖርትፎሊዮ">Portfolio</span>
+                            </button>
+                            <button class="pp-dropdown-item pp-dropdown-item--nav" role="menuitem"
+                                onclick="showTab('pills-rating-tab'); closeNavDropdown();">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                                <span class="lang-text" data-en="Reviews" data-am="አስተያየቶች">Reviews</span>
+                            </button>
+                            <div class="pp-dropdown-divider" aria-hidden="true"></div>
+                        </div>
+
+                        <!-- Invite Creator -->
+                        <button class="pp-dropdown-item" onclick="shareInvite(); closeNavDropdown();" role="menuitem">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" aria-hidden="true">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="8.5" cy="7" r="4"></circle>
+                                <line x1="20" y1="8" x2="20" y2="14"></line>
+                                <line x1="17" y1="11" x2="23" y2="11"></line>
+                            </svg>
+                            <span class="lang-text" data-en="Invite Creator" data-am="ፈጣሪ ጋብዝ">Invite Creator</span>
+                        </button>
+                        <!-- Request Review -->
+                        <button class="pp-dropdown-item" id="globalRequestReviewBtn" role="menuitem">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" aria-hidden="true">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <span class="lang-text" data-en="Request Review" data-am="አስተያየት ጠይቅ">Request Review</span>
+                        </button>
+
+                        <div class="pp-dropdown-divider" aria-hidden="true"></div>
+
+                        <!-- Language Toggle -->
+                        <button class="pp-dropdown-item" onclick="toggleLanguage(); closeNavDropdown();"
+                            role="menuitem">
+                            <span aria-hidden="true">🇪🇹</span>
+                            <span class="lang-toggle-label lang-text" data-en="Switch to Amharic"
+                                data-am="ወደ እንግሊዝኛ ቀይር">Switch to Amharic</span>
+                        </button>
+
+                        <div class="pp-dropdown-divider" aria-hidden="true"></div>
+
+                        <!-- Logout -->
+                        <form method="post" action="/auth/logout" class="m-0">
+                            <button type="submit" class="pp-dropdown-item pp-dropdown-item--danger" role="menuitem">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" aria-hidden="true">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                    <polyline points="16 17 21 12 16 7"></polyline>
+                                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                                </svg>
+                                <span class="lang-text" data-en="Log out" data-am="ውጣ">Log out</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </header>
+    </nav>
 
     <main class="flex-grow-1 py-4 px-3 w-100 fade-in-up stagger-2">
         <div class="row g-4 mx-auto max-w-7xl" style="max-width: 1200px;">
             <!-- Sidebar Navigation -->
-            <div class="col-lg-3 col-xl-2">
+            <div class="col-md-4 col-lg-3 col-xl-2 sidebar-container">
                 <div class="glass-card p-4 h-100 position-sticky" style="top: 100px;">
                     <div class="d-flex align-items-center gap-3 mb-4">
                         <div class="rounded-circle overflow-hidden shadow-sm"
@@ -100,9 +188,9 @@
                             data-bs-toggle="tab" data-bs-target="#pills-rating" type="button" role="tab">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
-                                <polygon
-                                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
-                                </polygon>
+                                <path
+                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z">
+                                </path>
                             </svg>
                             <span class="lang-text" data-en="Testimonials" data-am="ምስክርነት">Testimonials</span>
                         </button>
@@ -118,42 +206,74 @@
                     </nav>
 
                     <style>
-                        .nav-link.active {
+                        .pp-clean-tabs .nav-link.active {
                             background: var(--pp-gradient-main) !important;
                             color: var(--pp-ink-dark) !important;
                             box-shadow: var(--pp-shadow-md);
+                        }
+
+                        .pp-clean-tabs .nav-link svg {
+                            flex-shrink: 0 !important;
+                            width: 16px !important;
+                            height: 16px !important;
+                            min-width: 16px !important;
+                            display: inline-block !important;
                         }
                     </style>
 
                     <!-- Mini Stats in Sidebar -->
                     <div class="mt-5 pt-3 border-top" style="border-color: var(--pp-border-strong) !important;">
-                        <p class="text-uppercase small fw-bold text-muted mb-3 lang-text" style="letter-spacing: 0.1em;" data-en="Quick Stats" data-am="ፈጣን መረጃ">Quick Stats</p>
+                        <p class="text-uppercase small fw-bold text-muted mb-3 lang-text" style="letter-spacing: 0.1em;"
+                            data-en="Quick Stats" data-am="ፈጣን መረጃ">Quick Stats</p>
                         <div class="d-flex flex-column gap-3">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="small fw-medium text-muted lang-text" data-en="Projects" data-am="ስራዎች">Projects</span>
+                                <span class="small fw-medium text-muted lang-text" data-en="Projects"
+                                    data-am="ስራዎች">Projects</span>
                                 <span
                                     class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{
                                     metrics.proof_count }}</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="small fw-medium text-muted lang-text" data-en="Reviews" data-am="አስተያየቶች">Reviews</span>
+                                <span class="small fw-medium text-muted lang-text" data-en="Reviews"
+                                    data-am="አስተያየቶች">Reviews</span>
                                 <span
                                     class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{
                                     metrics.rating_count }}</span>
                             </div>
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="small fw-medium text-muted lang-text" data-en="Avg Rating" data-am="አማካይ ደረጃ">Avg Rating</span>
+                                <span class="small fw-medium text-muted lang-text" data-en="Avg Rating"
+                                    data-am="አማካይ ደረጃ">Avg Rating</span>
                                 <span
                                     class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{
                                     metrics.average_rating }} ★</span>
                             </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="small fw-medium text-muted lang-text" data-en="Profile Views"
+                                    data-am="የገጽ እይታ">Profile Views</span>
+                                <span
+                                    class="badge bg-white text-dark shadow-sm border border-light rounded-pill px-2 py-1">{{
+                                    profile.view_count }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invite a Creator (Viral Growth) -->
+                    <div class="mt-4 pt-4 border-top" style="border-color: var(--pp-border-strong) !important;">
+                        <p class="text-uppercase small fw-bold text-muted mb-3 lang-text" style="letter-spacing: 0.1em;"
+                            data-en="Grow Mereb" data-am="መረብን ያሳድጉ">Grow Mereb</p>
+                        <div class="glass-card p-3"
+                            style="background: rgba(var(--pp-brand-1-rgb), 0.05); border: 1px dashed var(--pp-brand-1);">
+                            <p class="small fw-semibold mb-2 lang-text" data-en="Invite a creator" data-am="ጓደኛን ይጋብዙ">
+                                Invite a creator</p>
+                            <button type="button" class="btn btn-primary btn-sm w-100 rounded-pill shadow-sm lang-text"
+                                id="inviteCreatorBtn" data-en="Share Invite" data-am="ግብዣ ላክ">Share Invite</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Main Workspace Area -->
-            <div class="col-lg-9 col-xl-10">
+            <div class="col-md-8 col-lg-9 col-xl-10 dashboard-main-content">
                 <!-- Audit banner removed to keep the interface clean and responsive -->
 
                 <div class="tab-content" id="dashboardTabsContent">
@@ -185,7 +305,8 @@
                             {% endif %}
 
                             <div class="mb-5">
-                                <h4 class="h6 text-uppercase text-muted fw-bold mb-3 lang-text" style="letter-spacing: 0.1em;" data-en="About" data-am="ስለ እኔ">About</h4>
+                                <h4 class="h6 text-uppercase text-muted fw-bold mb-3 lang-text"
+                                    style="letter-spacing: 0.1em;" data-en="About" data-am="ስለ እኔ">About</h4>
                                 <p class="text-dark fs-5" style="line-height: 1.7;">{{ profile.bio or 'No bio provided
                                     yet. Give your clients a glimpse of your story.' }}</p>
                             </div>
@@ -194,7 +315,8 @@
                                 <div class="col-md-6">
                                     <div class="p-4 rounded-4 h-100"
                                         style="background: rgba(0,0,0,0.02); border: 1px solid var(--pp-border);">
-                                        <p class="small text-muted text-uppercase fw-bold mb-2 lang-text" data-en="Location & Niche" data-am="አድራሻ እና የስራ ዘርፍ">Location & Niche</p>
+                                        <p class="small text-muted text-uppercase fw-bold mb-2 lang-text"
+                                            data-en="Location & Niche" data-am="አድራሻ እና የስራ ዘርፍ">Location & Niche</p>
                                         <p class="mb-0 fs-5 text-dark">
                                             {% if profile.niche %}<span class="fw-semibold">{{ profile.niche
                                                 }}</span><br>{% endif %}
@@ -208,7 +330,8 @@
                                 <div class="col-md-6">
                                     <div class="p-4 rounded-4 h-100"
                                         style="background: rgba(0,0,0,0.02); border: 1px solid var(--pp-border);">
-                                        <p class="small text-muted text-uppercase fw-bold mb-3 lang-text" data-en="Online Presence" data-am="ማህበራዊ ትስስር">Online Presence</p>
+                                        <p class="small text-muted text-uppercase fw-bold mb-3 lang-text"
+                                            data-en="Online Presence" data-am="ማህበራዊ ትስስር">Online Presence</p>
                                         <div class="d-flex gap-2 flex-wrap">
                                             {% if profile.website_url %}<a href="{{ profile.website_url }}"
                                                 target="_blank"
@@ -239,12 +362,17 @@
                             <div
                                 class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom border-light">
                                 <div>
-                                    <h2 class="h3 fw-bold mb-1 lang-text" data-en="Edit Profile" data-am="መገለጫ ያስተካክሉ">Edit Profile</h2>
-                                    <p class="text-muted mb-0 lang-text" data-en="Customize how you appear on your stunning public page." data-am="በህዝብ ገፅዎ ላይ እንዴት እንደሚታዩ ያስተካክሉ።">Customize how you appear on your stunning public page.
+                                    <h2 class="h3 fw-bold mb-1 lang-text" data-en="Edit Profile" data-am="መገለጫ ያስተካክሉ">
+                                        Edit Profile</h2>
+                                    <p class="text-muted mb-0 lang-text"
+                                        data-en="Customize how you appear on your stunning public page."
+                                        data-am="በህዝብ ገፅዎ ላይ እንዴት እንደሚታዩ ያስተካክሉ።">Customize how you appear on your
+                                        stunning public page.
                                     </p>
                                 </div>
                                 <button type="button" class="btn btn-white btn-sm rounded-pill px-4 shadow-sm lang-text"
-                                    onclick="document.getElementById('profileEdit').classList.add('d-none'); document.getElementById('profileView').classList.remove('d-none');" data-en="Cancel" data-am="ሰርዝ">
+                                    onclick="document.getElementById('profileEdit').classList.add('d-none'); document.getElementById('profileView').classList.remove('d-none');"
+                                    data-en="Cancel" data-am="ሰርዝ">
                                     Cancel
                                 </button>
                             </div>
@@ -328,8 +456,10 @@
 
                                 <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end gap-3">
                                     <button type="button" class="btn btn-white px-4 rounded-pill shadow-sm lang-text"
-                                        onclick="document.getElementById('profileEdit').classList.add('d-none'); document.getElementById('profileView').classList.remove('d-none');" data-en="Cancel" data-am="ሰርዝ">Cancel</button>
-                                    <button type="submit" class="btn btn-primary px-5 shadow-lg rounded-pill lang-text" data-en="Save Profile" data-am="መገለጫ አስቀምጥ">Save Profile</button>
+                                        onclick="document.getElementById('profileEdit').classList.add('d-none'); document.getElementById('profileView').classList.remove('d-none');"
+                                        data-en="Cancel" data-am="ሰርዝ">Cancel</button>
+                                    <button type="submit" class="btn btn-primary px-5 shadow-lg rounded-pill lang-text"
+                                        data-en="Save Profile" data-am="መገለጫ አስቀምጥ">Save Profile</button>
                                 </div>
                             </form>
                         </div>
@@ -340,8 +470,12 @@
                         id="pills-proof" role="tabpanel">
                         <div class="glass-card p-4 p-md-5">
                             <div class="mb-5 pb-3 border-bottom border-light">
-                                <h2 class="h3 fw-bold mb-2 lang-text" data-en="Add Portfolio Proof" data-am="የስራ ማስረጃ ያክሉ">Add Portfolio Proof</h2>
-                                <p class="text-muted mb-0 lang-text" data-en="Publish undeniable evidence of your best work." data-am="የምርጥ ስራዎችዎን የማይታበል ማስረጃ ያትሙ።">Publish undeniable evidence of your best work.</p>
+                                <h2 class="h3 fw-bold mb-2 lang-text" data-en="Add Portfolio Proof"
+                                    data-am="የስራ ማስረጃ ያክሉ">Add Portfolio Proof</h2>
+                                <p class="text-muted mb-0 lang-text"
+                                    data-en="Publish undeniable evidence of your best work."
+                                    data-am="የምርጥ ስራዎችዎን የማይታበል ማስረጃ ያትሙ።">Publish undeniable evidence of your best
+                                    work.</p>
                             </div>
 
                             {% if request.query_params.get("proof") == "1" %}
@@ -404,7 +538,8 @@
                                     </div>
                                 </div>
                                 <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary px-5 shadow-lg lang-text" data-en="Publish Project" data-am="ስራውን አትም">Publish
+                                    <button type="submit" class="btn btn-primary px-5 shadow-lg lang-text"
+                                        data-en="Publish Project" data-am="ስራውን አትም">Publish
                                         Project</button>
                                 </div>
                             </form>
@@ -418,13 +553,18 @@
                             <div
                                 class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 pb-3 border-bottom border-light gap-3">
                                 <div>
-                                    <h2 class="h3 fw-bold mb-2 lang-text" data-en="Client Testimonials" data-am="የደንበኞች አስተያየት">Client Testimonials</h2>
-                                    <p class="text-muted mb-0 lang-text" data-en="Record what your clients say about your stellar work." data-am="ደንበኞችዎ ስለ ምርጥ ስራዎ ምን እንደሚሉ ይመዝግቡ።">Record what your clients say about your stellar work.</p>
+                                    <h2 class="h3 fw-bold mb-2 lang-text" data-en="Client Testimonials"
+                                        data-am="የደንበኞች አስተያየት">Client Testimonials</h2>
+                                    <p class="text-muted mb-0 lang-text"
+                                        data-en="Record what your clients say about your stellar work."
+                                        data-am="ደንበኞችዎ ስለ ምርጥ ስራዎ ምን እንደሚሉ ይመዝግቡ።">Record what your clients say about
+                                        your stellar work.</p>
                                 </div>
                                 <div class="d-flex align-items-center gap-2">
                                     <button type="button"
                                         class="btn btn-white btn-sm rounded-pill px-4 shadow-sm fw-bold border lang-text"
-                                        id="copyReviewLinkBtn" style="color: var(--pp-brand-1);" data-en="🔗 Copy Review Link" data-am="🔗 መስጫ ሊንክ ኮፒ አድርግ">
+                                        id="copyReviewLinkBtn" style="color: var(--pp-brand-1);"
+                                        data-en="🔗 Copy Review Link" data-am="🔗 መስጫ ሊንክ ኮፒ አድርግ">
                                         🔗 Copy Review Link
                                     </button>
                                 </div>
@@ -467,7 +607,8 @@
                                     </div>
                                 </div>
                                 <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary px-5 shadow-lg lang-text" data-en="Save Testimonial" data-am="አስተያየቱን አስቀምጥ">Save
+                                    <button type="submit" class="btn btn-primary px-5 shadow-lg lang-text"
+                                        data-en="Save Testimonial" data-am="አስተያየቱን አስቀምጥ">Save
                                         Testimonial</button>
                                 </div>
                             </form>
@@ -478,8 +619,10 @@
                     <div class="tab-pane fade" id="pills-feed" role="tabpanel">
                         <div class="glass-card p-4 p-md-5">
                             <div class="mb-5 pb-3 border-bottom border-light">
-                                <h2 class="h3 fw-bold mb-2 lang-text" data-en="Live Activity Feed" data-am="የቅርብ ጊዜ እንቅስቃሴዎች">Live Activity Feed</h2>
-                                <p class="text-muted mb-0 lang-text" data-en="Your recently published proof items." data-am="በቅርብ ጊዜ የታተሙ የስራ ማስረጃዎች">Your recently published proof items.</p>
+                                <h2 class="h3 fw-bold mb-2 lang-text" data-en="Live Activity Feed"
+                                    data-am="የቅርብ ጊዜ እንቅስቃሴዎች">Live Activity Feed</h2>
+                                <p class="text-muted mb-0 lang-text" data-en="Your recently published proof items."
+                                    data-am="በቅርብ ጊዜ የታተሙ የስራ ማስረጃዎች">Your recently published proof items.</p>
                             </div>
 
                             <div class="d-flex flex-column gap-3">
@@ -528,35 +671,76 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Copy Public Profile Link
-        const copyBtn = document.getElementById("dashCopyUrl");
-        if (copyBtn) {
-            const originalContent = copyBtn.innerHTML;
-            copyBtn.addEventListener("click", function () {
-                var url = window.location.origin + "/p/{{ profile.slug }}";
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(url).then(function () {
-                        copyBtn.innerHTML = '<span class="text-success fw-bold">✓ Copied!</span>';
-                        setTimeout(() => copyBtn.innerHTML = originalContent, 2000);
-                    });
-                }
-            });
+        // Unified Review Link Copying
+        const globalReviewBtn = document.getElementById("globalRequestReviewBtn");
+        const sidebarReviewBtn = document.getElementById("copyReviewLinkBtn");
+        const inviteBtnInSidebar = document.getElementById("inviteCreatorBtn");
+
+        function copyReviewLink(btn) {
+            const originalContent = btn.innerHTML;
+            const url = window.location.origin + "/p/{{ profile.slug }}/review";
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(function () {
+                    btn.innerHTML = '<span class="text-success fw-bold">✓ Copied!</span>';
+                    setTimeout(() => btn.innerHTML = originalContent, 2000);
+                });
+            }
         }
 
-        // Copy Review Request Link
-        const copyReviewBtn = document.getElementById("copyReviewLinkBtn");
-        if (copyReviewBtn) {
-            const originalReviewContent = copyReviewBtn.innerHTML;
-            copyReviewBtn.addEventListener("click", function () {
-                var url = window.location.origin + "/p/{{ profile.slug }}/review";
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(url).then(function () {
-                        copyReviewBtn.innerHTML = '<span class="text-success fw-bold">✓ Copied Review Link!</span>';
-                        setTimeout(() => copyReviewBtn.innerHTML = originalReviewContent, 2500);
-                    });
-                }
-            });
+        if (globalReviewBtn) globalReviewBtn.addEventListener("click", () => copyReviewLink(globalReviewBtn));
+        if (sidebarReviewBtn) sidebarReviewBtn.addEventListener("click", () => copyReviewLink(sidebarReviewBtn));
+        if (inviteBtnInSidebar) inviteBtnInSidebar.addEventListener("click", shareInvite);
+    });
+
+    function showTab(tabId) {
+        const btn = event.currentTarget || document.getElementById(tabId + "-btn");
+        const tabEl = document.getElementById(tabId.replace('-tab', ''));
+        if (tabEl) {
+            const tab = new bootstrap.Tab(document.getElementById(tabId));
+            tab.show();
+            document.querySelectorAll('.mobile-nav-item').forEach(b => b.classList.remove('active'));
+            if (btn && btn.classList.contains('mobile-nav-item')) btn.classList.add('active');
         }
+    }
+
+    function shareInvite() {
+        const inviteUrl = window.location.origin + "/auth/register?ref={{ profile.slug }}";
+        const message = "I use Mereb to show my professional proof. Join me! " + inviteUrl;
+        if (navigator.share) {
+            navigator.share({ title: 'Join Mereb', text: message, url: inviteUrl }).catch(console.error);
+        } else {
+            navigator.clipboard.writeText(message).then(() => alert("Invite message copied!"));
+        }
+    }
+
+    // ── Navbar dropdown ────────────────────────────────────────────────────
+    function toggleNavDropdown() {
+        const menu = document.getElementById('navDropdownMenu');
+        const btn = document.getElementById('navKebabBtn');
+        const open = menu.classList.toggle('open');
+        btn.classList.toggle('active', open);
+        btn.setAttribute('aria-expanded', String(open));
+        menu.setAttribute('aria-hidden', String(!open));
+    }
+
+    function closeNavDropdown() {
+        const menu = document.getElementById('navDropdownMenu');
+        const btn = document.getElementById('navKebabBtn');
+        if (!menu) return;
+        menu.classList.remove('open');
+        btn.classList.remove('active');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+    }
+
+    // Close on outside click or Escape
+    document.addEventListener('click', function (e) {
+        const dropdown = document.getElementById('navMoreDropdown');
+        if (dropdown && !dropdown.contains(e.target)) closeNavDropdown();
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeNavDropdown();
     });
 </script>
+</main>
 {% endblock %}

@@ -31,6 +31,7 @@ class Profile(Base):
     tiktok_handle: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
     telegram_handle: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
     website_url: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
+    view_count: Mapped[int] = mapped_column(Integer, default=0)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     proof_items: Mapped[list["ProofItem"]] = relationship(back_populates="profile", cascade="all, delete-orphan")
