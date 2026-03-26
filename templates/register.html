@@ -9,7 +9,11 @@
 <div class="min-vh-100 d-flex flex-column fade-in-up stagger-1">
     <nav class="p-4 w-100 position-absolute top-0 start-0 z-3 text-center text-md-start d-flex justify-content-between align-items-center">
         <a class="d-inline-flex align-items-center gap-2 text-decoration-none" href="/">
-            <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">M</div>
+            <div class="pp-logo-img" style="width:32px;height:32px;">
+                <img src="/static/icons/icon-512.png" alt="Mereb logo"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <span class="pp-logo-fallback">M</span>
+            </div>
             <span class="fs-6 fw-bold text-dark">Mereb</span>
         </a>
         <button class="btn btn-sm btn-white rounded-pill px-3 shadow-sm lang-toggle-btn border" onclick="toggleLanguage()" style="font-size: 0.85rem; font-weight: bold;">🇪🇹 አማርኛ</button>

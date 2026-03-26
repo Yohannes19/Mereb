@@ -15,7 +15,11 @@
         
         <div class="text-center mb-5 fade-in-up stagger-1">
             <a class="d-inline-flex align-items-center gap-2 text-decoration-none mb-4" href="/">
-                <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">M</div>
+                <div class="pp-logo-img" style="width:32px;height:32px;">
+                    <img src="/static/icons/icon-512.png" alt="Mereb logo"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <span class="pp-logo-fallback">M</span>
+                </div>
                 <span class="fs-6 fw-bold text-dark">Mereb</span>
             </a>
             <h1 class="display-6 fw-bold mb-2 lang-text" data-en="Leave a Testimonial" data-am="አስተያየት ይተዉ">Leave a Testimonial</h1>

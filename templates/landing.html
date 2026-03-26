@@ -13,7 +13,11 @@
     <nav class="navbar navbar-expand-lg pp-nav">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center gap-2" href="/">
-                <div class="brand-logomark" style="background: var(--pp-gradient-main); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--pp-ink-dark); font-weight: 800; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(10,247,26,0.4);">M</div>
+                <div class="pp-logo-img" style="width:36px;height:36px;">
+                    <img src="/static/icons/icon-512.png" alt="Mereb logo"
+                        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <span class="pp-logo-fallback">M</span>
+                </div>
                 <span class="fs-5 fw-bold" style="color: var(--pp-ink-dark); letter-spacing: -0.02em;">Mereb</span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#lpNav" aria-controls="lpNav" aria-expanded="false" aria-label="Menu">
@@ -133,7 +137,105 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
+        <!-- What to Include Section -->
+        <section id="proof" class="py-5 mt-5 fade-in-up stagger-2">
+            <div class="container px-4">
+                <div class="text-center mb-5">
+                    <span class="badge badge-creative mb-3 lang-text" data-en="Your proof kit" data-am="የማስረጃ ዓይነቶች">Your proof kit</span>
+                    <h2 class="display-5 fw-bold lang-text" data-en="What to include on your page." data-am="በገጽዎ ላይ ምን ማካተት አለብዎ።">What to include on your page.</h2>
+                    <p class="lead text-muted mx-auto mt-3 lang-text" style="max-width: 600px;" data-en="Four types of proof that turn a skeptical visitor into a paying client." data-am="አራት ዓይነት ማስረጃዎች ጠራጣሪ ጎብኚን ወደ ደንበኛ ይቀይራሉ።">Four types of proof that turn a skeptical visitor into a paying client.</p>
+                </div>
+                <div class="row g-4">
+                    <div class="col-sm-6 col-lg-3 fade-in-up stagger-1">
+                        <div class="glass-card h-100 p-4 text-center">
+                            <div class="mb-3" style="font-size: 2.5rem;">📁</div>
+                            <h4 class="fw-bold mb-2 lang-text" data-en="Portfolio Projects" data-am="የፖርትፎሊዮ ስራዎች">Portfolio Projects</h4>
+                            <p class="small text-muted lang-text" data-en="Specific projects with titles, descriptions, measurable outcomes, and links to live work." data-am="ርዕስ፣ መግለጫ፣ ሊለካ የሚችል ውጤት እና ሊንክ ያላቸው ተጨባጭ ስራዎች።">Specific projects with titles, descriptions, measurable outcomes, and links to live work.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 fade-in-up stagger-2">
+                        <div class="glass-card h-100 p-4 text-center">
+                            <div class="mb-3" style="font-size: 2.5rem;">⭐</div>
+                            <h4 class="fw-bold mb-2 lang-text" data-en="Client Ratings" data-am="የደንበኞች ደረጃ">Client Ratings</h4>
+                            <p class="small text-muted lang-text" data-en="Star ratings and quotes from real clients. Collected via your unique review link." data-am="ከገሃዱ ደንበኞች የተሰበሰቡ ደረጃዎች እና ጥቅሶች።">Star ratings and quotes from real clients. Collected via your unique review link.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 fade-in-up stagger-3">
+                        <div class="glass-card h-100 p-4 text-center">
+                            <div class="mb-3" style="font-size: 2.5rem;">📈</div>
+                            <h4 class="fw-bold mb-2 lang-text" data-en="Verifiable Outcomes" data-am="ሊረጋገጡ የሚችሉ ውጤቶች">Verifiable Outcomes</h4>
+                            <p class="small text-muted lang-text" data-en="Numbers that prove impact — growth percentages, revenue generated, time saved." data-am="ተጽዕኖን የሚያሳዩ ቁጥሮች — የዕድገት መጠን፣ የተፈጠረ ገቢ።">Numbers that prove impact — growth percentages, revenue generated, time saved.</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3 fade-in-up stagger-4">
+                        <div class="glass-card h-100 p-4 text-center">
+                            <div class="mb-3" style="font-size: 2.5rem;">🔗</div>
+                            <h4 class="fw-bold mb-2 lang-text" data-en="Online Presence" data-am="ኦንላይን ቀስቃሽ">Online Presence</h4>
+                            <p class="small text-muted lang-text" data-en="Your website, LinkedIn, Instagram, Behance — all in one consolidated trust signal." data-am="ድርጣቢያዎ፣ ሊንክድኢን፣ ኢንስታግራም — ሁሉም በአንድ ቦታ።">Your website, LinkedIn, Instagram, Behance — all in one consolidated trust signal.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Who It's For Section -->
+        <section id="who" class="py-5 mt-5 fade-in-up stagger-2">
+            <div class="container px-4">
+                <div class="text-center mb-5">
+                    <span class="badge badge-creative mb-3 lang-text" data-en="Built for you" data-am="ለእርስዎ የተሰራ">Built for you</span>
+                    <h2 class="display-5 fw-bold lang-text" data-en="Who is Mereb for?" data-am="መረብ ለማን ነው?">Who is Mereb for?</h2>
+                    <p class="lead text-muted mx-auto mt-3 lang-text" style="max-width: 600px;" data-en="If you sell your skills, you need Mereb." data-am="ብቃትዎን የሚሸጡ ከሆነ፣ መረብን ይፈልጋሉ።">If you sell your skills, you need Mereb.</p>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-sm-6 col-lg-4 fade-in-up stagger-1">
+                        <div class="glass-card h-100 p-4 d-flex align-items-start gap-3">
+                            <span style="font-size: 2rem;">🎨</span>
+                            <div>
+                                <h5 class="fw-bold mb-1 lang-text" data-en="Designers & Creatives" data-am="ዲዛይነሮች እና ፈጣሪዎች">Designers & Creatives</h5>
+                                <p class="small text-muted mb-0 lang-text" data-en="Brand designers, UI/UX, illustrators, photographers — show the measurable impact of your visual work." data-am="የምልክት ዲዛይነሮች፣ UI/UX፣ ፎቶግራፈኞች — የስዕላዊ ስራዎ ተጽዕኖ ያሳዩ።">Brand designers, UI/UX, illustrators, photographers — show the measurable impact of your visual work.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 fade-in-up stagger-2">
+                        <div class="glass-card h-100 p-4 d-flex align-items-start gap-3">
+                            <span style="font-size: 2rem;">💻</span>
+                            <div>
+                                <h5 class="fw-bold mb-1 lang-text" data-en="Developers & Engineers" data-am="ገንቢዎች እና መሐንዲሶች">Developers & Engineers</h5>
+                                <p class="small text-muted mb-0 lang-text" data-en="Freelance or agency devs who want to show real results beyond a GitHub link." data-am="ከጊትሃብ ሊንክ ባሻገር ውጤታቸውን ለማሳየት የሚፈልጉ ፍሪላንሰሮች።">Freelance or agency devs who want to show real results beyond a GitHub link.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 fade-in-up stagger-3">
+                        <div class="glass-card h-100 p-4 d-flex align-items-start gap-3">
+                            <span style="font-size: 2rem;">📣</span>
+                            <div>
+                                <h5 class="fw-bold mb-1 lang-text" data-en="Marketers & Strategists" data-am="ሰሚዎች እና ስትራቴጂስቶች">Marketers & Strategists</h5>
+                                <p class="small text-muted mb-0 lang-text" data-en="Growth marketers, copywriters, and consultants who need to prove ROI, not just creativity." data-am="ትርፍ ለማሳየት የሚፈልጉ ቅጂ ጸሐፊዎች እና አማካሪዎች።">Growth marketers, copywriters, and consultants who need to prove ROI, not just creativity.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 fade-in-up stagger-4">
+                        <div class="glass-card h-100 p-4 d-flex align-items-start gap-3">
+                            <span style="font-size: 2rem;">🎬</span>
+                            <div>
+                                <h5 class="fw-bold mb-1 lang-text" data-en="Content Creators" data-am="ይዘት ፈጣሪዎች">Content Creators</h5>
+                                <p class="small text-muted mb-0 lang-text" data-en="YouTubers, podcasters, video editors who want to attract brand deals with verified reach stats." data-am="በተረጋገጡ ስታቲስቲክሶች የብራንድ ስምምነቶችን ለመሳብ የሚፈልጉ ፈጣሪዎች።">YouTubers, podcasters, video editors who want to attract brand deals with verified reach stats.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-4 fade-in-up stagger-5">
+                        <div class="glass-card h-100 p-4 d-flex align-items-start gap-3">
+                            <span style="font-size: 2rem;">🏗️</span>
+                            <div>
+                                <h5 class="fw-bold mb-1 lang-text" data-en="Builders & Contractors" data-am="ሠሪዎች እና ተቋራጮች">Builders & Contractors</h5>
+                                <p class="small text-muted mb-0 lang-text" data-en="Architects, interior designers, contractors who close deals with a portfolio that speaks for itself." data-am="ለራሱ የሚናገር ፖርትፎሊዮ ይዘው ጨረታ የሚያሸንፉ ሠሪዎችና አርክቴክቶች።">Architects, interior designers, contractors who close deals with a portfolio that speaks for itself.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section class="py-5 my-5 fade-in-up stagger-2">
             <div class="container">
                 <div class="glass-card p-5 text-center position-relative overflow-hidden" style="border: 1px solid var(--pp-border-glow);">
