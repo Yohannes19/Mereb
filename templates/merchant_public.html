@@ -1,18 +1,19 @@
 {% extends "base.html" %}
-{% block title %}{{ profile.display_name }} | Mereb{% endblock %}
+{% block title %}{{ profile.display_name }} | Proof Portfolio{% endblock %}
+
+{% block description %}View professional work and verified testimonials for {{ profile.display_name }} on Mereb.{% endblock %}
+
+{% block og_title %}{{ profile.display_name }}'s Proof Portfolio{% endblock %}
+{% block og_description %}{{ profile.tagline or 'Explore my professional proof of work and client testimonials.' }}{% endblock %}
+
+{% block twitter_title %}{{ profile.display_name }}'s Proof Portfolio{% endblock %}
+{% block twitter_description %}{{ profile.tagline or 'Explore my professional proof of work and client testimonials.' }}{% endblock %}
+
 {% block body %}
-<!-- Ambient Dynamic Background -->
-<div class="ambient-bg" style="background: #FAFAFC;">
-    <div class="ambient-orb ambient-orb-1" style="opacity: 0.25;"></div>
-    <div class="ambient-orb ambient-orb-2" style="opacity: 0.15;"></div>
-    <div class="ambient-orb ambient-orb-3" style="opacity: 0.1;"></div>
-</div>
+{% include "components/ambient_bg.html" %}
 
 <main class="min-vh-100 py-5 position-relative">
-    <!-- Language Toggle Fixed -->
-    <div class="position-absolute p-3 p-md-4 z-3" style="top: 0; right: 0;">
-        <button class="btn btn-sm btn-white rounded-pill px-3 shadow-sm lang-toggle-btn border" onclick="toggleLanguage()" style="font-size: 0.85rem; font-weight: bold;">🇪🇹 አማርኛ</button>
-    </div>
+    {% include "components/lang_toggle.html" %}
     <div class="container" style="max-width: 1000px;">
         <!-- Premium Public Hero -->
         <header class="mb-5 fade-in-up stagger-1">
@@ -20,29 +21,43 @@
                 <!-- Abstract header decoration -->
                 <div class="position-absolute" style="top: -20%; right: -10%; width: 300px; height: 300px; background: radial-gradient(circle, rgba(110,86,255,0.08) 0%, rgba(110,86,255,0) 70%); border-radius: 50%;"></div>
                 
-                <div class="row align-items-center g-4 position-relative z-1">
-                    <div class="col-md-8 text-center text-md-start">
-                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 mb-3">
+                <div class="row align-items-center g-4 g-lg-5 position-relative z-1">
+                    <div class="col-lg-auto text-center text-lg-start">
+                        <!-- Identity Avatar -->
+                        <div class="position-relative d-inline-block">
+                            {% if profile.profile_image_url %}
+                            <div class="profile-avatar-lg mx-auto shadow-glow" style="background-image: url('{{ profile.profile_image_url }}');"></div>
+                            {% else %}
+                            <div class="profile-avatar-lg profile-avatar-placeholder mx-auto shadow-glow">
+                                {{ profile.display_name[0]|upper }}
+                            </div>
+                            {% endif %}
+                            <span class="position-absolute border border-white border-3 rounded-circle" style="bottom: 8%; right: -2%; width: 22px; height: 22px; background: #10b981; box-shadow: 0 0 15px rgba(16,185,129,0.5);" title="Verified Creator"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg text-center text-lg-start">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-2 mb-3">
                             <span class="badge badge-creative rounded-pill">{{ profile.profile_type|upper }}</span>
                             <span class="text-muted small fw-bold text-uppercase lang-text" style="letter-spacing: 0.12em;" data-en="Verified Portfolio" data-am="የተረጋገጠ ፖርትፎሊዮ">Verified Portfolio</span>
                         </div>
-                        <h1 class="display-4 fw-bold text-dark mb-3" style="line-height: 1.05;">{{ profile.display_name }}</h1>
+                        <h1 class="display-4 fw-bold text-dark mb-2" style="line-height: 1.05;">{{ profile.display_name }}</h1>
                         {% if profile.tagline %}
-                        <p class="lead fw-medium mb-3" style="color: var(--pp-brand-1); font-size: 1.25rem;">{{ profile.tagline }}</p>
+                        <p class="lead fw-semibold mb-3" style="color: var(--pp-brand-1); font-size: 1.25rem;">{{ profile.tagline }}</p>
                         {% endif %}
                         {% if profile.bio %}
-                        <p class="text-muted mb-4" style="max-width: 600px; line-height: 1.7;">{{ profile.bio }}</p>
+                        <p class="text-muted mb-4 opacity-75 small" style="max-width: 600px; line-height: 1.7;">{{ profile.bio }}</p>
                         {% endif %}
-                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2">
-                            {% if profile.niche %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill">📍 {{ profile.niche }}</span>{% endif %}
-                            {% if profile.city %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill">🏙️ {{ profile.city }}</span>{% endif %}
-                            {% if profile.country %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill">🌍 {{ profile.country }}</span>{% endif %}
+                        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start gap-2 pt-1">
+                            {% if profile.niche %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill small">📍 {{ profile.niche }}</span>{% endif %}
+                            {% if profile.city %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill small">🏙️ {{ profile.city }}</span>{% endif %}
+                            {% if profile.country %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill small">🌍 {{ profile.country }}</span>{% endif %}
                         </div>
                     </div>
                     
-                    <div class="col-md-4">
-                        <div class="d-flex flex-column gap-3 align-items-center align-items-md-end">
-                            <div class="text-center bg-white shadow-sm border px-4 py-3 rounded-4 w-100" style="max-width: 240px;">
+                    <div class="col-lg-4">
+                        <div class="d-flex flex-column gap-3 align-items-center align-items-lg-end">
+                            <div class="text-center bg-white shadow-sm border px-4 py-3 rounded-4 w-100" style="max-width: 280px;">
                                 <div class="fs-2 mb-1">⭐</div>
                                 <h3 class="fw-bold mb-0 text-dark">{{ metrics.average_rating }} / 5</h3>
                                 <p class="small text-muted mb-0 fw-semibold lang-text" data-en="from {{ metrics.rating_count }} reviews" data-am="ከ {{ metrics.rating_count }} አስተያየቶች">from {{ metrics.rating_count }} reviews</p>
@@ -51,16 +66,28 @@
                             <!-- Links -->
                             <div class="d-flex gap-2 flex-wrap justify-content-center justify-content-md-end w-100" style="max-width: 240px;">
                                 {% if profile.website_url %}
-                                <a href="{{ profile.website_url }}" target="_blank" rel="noopener" class="btn btn-primary w-100 fw-semibold rounded-pill py-2 shadow-sm lang-text" data-en="Visit Website ↗" data-am="ድረ-ገጽ ጎብኝ ↗">Visit Website ↗</a>
+                                <a href="{{ profile.website_url }}" target="_blank" rel="noopener" class="btn btn-primary w-100 fw-semibold rounded-pill py-2 shadow-sm d-flex align-items-center justify-content-center gap-2">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                    <span class="lang-text" data-en="Visit Website" data-am="ድረ-ገጽ ጎብኝ">Visit Website</span>
+                                </a>
                                 {% endif %}
                                 {% if profile.instagram_handle %}
-                                <a href="https://instagram.com/{{ profile.instagram_handle.strip('@') }}" target="_blank" rel="noopener" class="btn btn-white w-100 rounded-pill py-2 text-decoration-none">📸 {{ profile.instagram_handle }}</a>
+                                <a href="https://instagram.com/{{ profile.instagram_handle.strip('@') }}" target="_blank" rel="noopener" class="btn btn-white w-100 rounded-pill py-2 d-flex align-items-center justify-content-center gap-2">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                                    <span>{{ profile.instagram_handle }}</span>
+                                </a>
                                 {% endif %}
                                 {% if profile.tiktok_handle %}
-                                <a href="https://tiktok.com/@{{ profile.tiktok_handle.strip('@') }}" target="_blank" rel="noopener" class="btn btn-white w-100 rounded-pill py-2 text-decoration-none">🎬 {{ profile.tiktok_handle }}</a>
+                                <a href="https://tiktok.com/@{{ profile.tiktok_handle.strip('@') }}" target="_blank" rel="noopener" class="btn btn-white w-100 rounded-pill py-2 d-flex align-items-center justify-content-center gap-2">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+                                    <span>{{ profile.tiktok_handle }}</span>
+                                </a>
                                 {% endif %}
                                 {% if profile.telegram_handle %}
-                                <a href="https://t.me/{{ profile.telegram_handle.strip('@') }}" target="_blank" rel="noopener" class="btn btn-white w-100 rounded-pill py-2 text-decoration-none">💬 Telegram</a>
+                                <a href="https://t.me/{{ profile.telegram_handle.strip('@') }}" target="_blank" rel="noopener" class="btn btn-white w-100 rounded-pill py-2 d-flex align-items-center justify-content-center gap-2">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                                    <span>Telegram</span>
+                                </a>
                                 {% endif %}
                             </div>
                         </div>

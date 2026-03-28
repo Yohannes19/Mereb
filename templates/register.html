@@ -34,6 +34,7 @@
             {% endif %}
 
             <form action="/auth/register" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <div class="mb-3">
                     <label for="display_name" class="form-label lang-text" data-en="Brand or Display Name" data-am="የትርዒት ስም (ብራንድ)">Brand or Display Name</label>
                     <input id="display_name" name="display_name" type="text" required class="form-control" placeholder="e.g. Muna Studio">

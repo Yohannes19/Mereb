@@ -6,7 +6,8 @@ from hashlib import pbkdf2_hmac
 from sqlalchemy.orm import Session
 
 from app import models
-
+from app.core.security import hash_password, verify_password, generate_api_key
+from app.utils import slugify, ensure_unique_slug, format_handle
 
 DEFAULT_PROFILE_EMAIL = "demo@proofpage.et"
 DEFAULT_PROFILE_NAME = "Muna Studio"
@@ -14,40 +15,7 @@ DEFAULT_LOGIN_PASSWORD = "changeme123"
 PBKDF2_ITERATIONS = 600000
 
 
-def generate_api_key() -> str:
-    return secrets.token_hex(24)
 
-
-def slugify(value: str) -> str:
-    cleaned = re.sub(r"[^a-z0-9]+", "-", value.lower()).strip("-")
-    return cleaned or f"profile-{secrets.token_hex(3)}"
-
-
-def ensure_unique_slug(db: Session, *, display_name: str, profile_id: str | None = None) -> str:
-    base_slug = slugify(display_name)
-    candidate = base_slug
-    counter = 2
-    while True:
-        query = db.query(models.Profile).filter_by(slug=candidate)
-        if profile_id:
-            query = query.filter(models.Profile.id != profile_id)
-        if not query.first():
-            return candidate
-        candidate = f"{base_slug}-{counter}"
-        counter += 1
-
-
-def hash_password(password: str, salt: str | None = None) -> str:
-    salt_value = salt or secrets.token_hex(16)
-    digest = pbkdf2_hmac("sha256", password.encode("utf-8"), salt_value.encode("utf-8"), PBKDF2_ITERATIONS)
-    return f"{salt_value}${digest.hex()}"
-
-
-def verify_password(password: str, password_hash: str | None) -> bool:
-    if not password_hash or "$" not in password_hash:
-        return False
-    salt, expected = password_hash.split("$", 1)
-    return hash_password(password, salt) == f"{salt}${expected}"
 
 
 def get_or_create_demo_profile(db: Session) -> models.Profile:
@@ -168,6 +136,7 @@ def update_profile(
     tiktok_handle: str,
     telegram_handle: str,
     website_url: str,
+    profile_image_url: str | None = None,
 ) -> models.Profile:
     profile.display_name = display_name
     profile.slug = ensure_unique_slug(db, display_name=display_name, profile_id=profile.id)
@@ -181,6 +150,7 @@ def update_profile(
     profile.tiktok_handle = format_handle(tiktok_handle)
     profile.telegram_handle = format_handle(telegram_handle)
     profile.website_url = website_url or None
+    profile.profile_image_url = profile_image_url or None
     db.add(profile)
     db.commit()
     db.refresh(profile)
@@ -217,6 +187,45 @@ def add_proof_item(
     return item
 
 
+def update_proof_item(
+    db: Session,
+    *,
+    proof_id: str,
+    profile_id: str,
+    title: str,
+    client_name: str | None,
+    category: str,
+    summary: str,
+    result_metric: str | None,
+    proof_url: str | None,
+    image_url: str | None,
+    verification_note: str | None,
+) -> models.ProofItem | None:
+    item = db.query(models.ProofItem).filter_by(id=proof_id, profile_id=profile_id).first()
+    if not item:
+        return None
+    item.title = title
+    item.client_name = client_name
+    item.category = category
+    item.summary = summary
+    item.result_metric = result_metric
+    item.proof_url = proof_url
+    item.image_url = image_url
+    item.verification_note = verification_note
+    db.commit()
+    db.refresh(item)
+    return item
+
+
+def delete_proof_item(db: Session, *, proof_id: str, profile_id: str) -> bool:
+    item = db.query(models.ProofItem).filter_by(id=proof_id, profile_id=profile_id).first()
+    if not item:
+        return False
+    db.delete(item)
+    db.commit()
+    return True
+
+
 def add_rating(
     db: Session,
     *,
@@ -237,6 +246,15 @@ def add_rating(
     db.commit()
     db.refresh(rating)
     return rating
+
+
+def delete_rating(db: Session, *, rating_id: str, profile_id: str) -> bool:
+    rating = db.query(models.Rating).filter_by(id=rating_id, profile_id=profile_id).first()
+    if not rating:
+        return False
+    db.delete(rating)
+    db.commit()
+    return True
 
 
 def build_dashboard_metrics(profile: models.Profile) -> dict[str, float]:
@@ -342,12 +360,34 @@ def build_profile_audit(profile: models.Profile) -> dict[str, object]:
     }
 
 
-def format_handle(value: str) -> str | None:
-    cleaned = value.strip()
-    if not cleaned:
-        return None
-    if cleaned.startswith("@"):
-        return cleaned
-    alphabet = string.ascii_letters + string.digits + "._"
-    simplified = "".join(char for char in cleaned if char in alphabet)
-    return f"@{simplified}" if simplified else None
+# Add to app/services.py
+def promote_to_admin(db: Session, email: str) -> bool:
+    """Utility to make a user an admin based on their email."""
+    profile = db.query(models.Profile).filter_by(email=email).first()
+    if profile:
+        profile.is_admin = True
+        db.commit()
+        return True
+    return False
+
+
+def get_all_profiles(db: Session) -> list[models.Profile]:
+    return db.query(models.Profile).order_by(models.Profile.created_at.desc()).all()
+
+
+def get_all_proof_items(db: Session) -> list[models.ProofItem]:
+    return db.query(models.ProofItem).order_by(models.ProofItem.created_at.desc()).all()
+
+
+def get_all_ratings(db: Session) -> list[models.Rating]:
+    return db.query(models.Rating).order_by(models.Rating.created_at.desc()).all()
+
+
+def delete_profile(db: Session, *, profile_id: int) -> bool:
+    profile = db.query(models.Profile).filter_by(id=profile_id).first()
+    if not profile:
+        return False
+    # Models have cascade delete setup for proof items and ratings via relationship
+    db.delete(profile)
+    db.commit()
+    return True

@@ -34,6 +34,7 @@
             {% endif %}
 
             <form action="/auth/login" method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <div class="mb-3">
                     <label for="email" class="form-label lang-text" data-en="Email address" data-am="የኢሜል አድራሻ">Email address</label>
                     <input id="email" name="email" type="email" autocomplete="email" required class="form-control"

@@ -1,0 +1,95 @@
+                    <div class="tab-pane fade {% if request.query_params.get('rating') %}show active{% endif %}"
+                        id="pills-rating" role="tabpanel">
+                        <div class="glass-card p-4 p-md-5">
+                            <div
+                                class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 pb-3 border-bottom border-light gap-3">
+                                <div>
+                                    <h2 class="h3 fw-bold mb-2 lang-text" data-en="Client Testimonials"
+                                        data-am="የደንበኞች አስተያየት">Client Testimonials</h2>
+                                    <p class="text-muted mb-0 lang-text"
+                                        data-en="Verified reviews collected from your public profile."
+                                        data-am="ከህዝብ መገለጫዎ የተሰበሰቡ የተረጋገጡ አስተያየቶች።">Verified reviews collected from
+                                        your public profile.</p>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-sm rounded-pill px-4 shadow-sm lang-text"
+                                    data-en="+ Digital Audit" data-am="+ ዲጂታል ኦዲት">
+                                    + Digital Audit
+                                </button>
+                            </div>
+
+                            <div class="row g-4">
+                                <!-- Share Review Link UI -->
+                                <div class="col-lg-4">
+                                    <div class="p-4 rounded-4" style="background: rgba(110, 86, 255, 0.05); border: 1px solid var(--pp-border-glow);">
+                                        <div class="mb-4" style="font-size: 2.5rem;">🌟</div>
+                                        <h3 class="h5 fw-bold text-dark mb-3 lang-text" data-en="Collect Reviews" data-am="ምስክርነት ይሰብስቡ">Collect Reviews</h3>
+                                        <p class="small text-muted mb-4 lang-text"
+                                            data-en="Share this secret link with your clients. Only reviews submitted via this link will appear on your profile to ensure 100% credibility."
+                                            data-am="ይህንን ምስጢራዊ ሊንክ ለደንበኞችዎ ያጋሩ። 100% ታማኝነትን ለማረጋገጥ በዚህ ሊንክ በኩል የሚቀርቡ አስተያየቶች ብቻ በመገለጫዎ ላይ ይታያሉ።">
+                                            Share this secret link with your clients. Only reviews submitted via this link will appear on your profile to ensure 100% credibility.
+                                        </p>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label small fw-bold text-muted text-uppercase mb-2 lang-text" data-en="Review Link" data-am="የአስተያየት ሊንክ">Review Link</label>
+                                            <div class="input-group">
+                                                <input type="text" id="reviewLinkInput" class="form-control form-control-sm bg-white" value="{{ request.base_url }}p/{{ profile.slug }}/review" readonly>
+                                                <button class="btn btn-primary btn-sm px-3" onclick="copyReviewLink()">
+                                                    <span id="copyBtnText">Copy</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <script>
+                                        function copyReviewLink() {
+                                            const linkInput = document.getElementById('reviewLinkInput');
+                                            navigator.clipboard.writeText(linkInput.value).then(() => {
+                                                const btnText = document.getElementById('copyBtnText');
+                                                const originalText = btnText.innerText;
+                                                btnText.innerText = "✓ Copied!";
+                                                setTimeout(() => { btnText.innerText = originalText; }, 2000);
+                                            });
+                                        }
+                                    </script>
+                                </div>
+
+                                <!-- Reviews List -->
+                                <div class="col-lg-8">
+                                    <div class="d-flex flex-column gap-3" id="ratingsList">
+                                        {% for r in ratings %}
+                                        <div class="p-4 rounded-4 border bg-white shadow-sm position-relative fade-in-up" 
+                                            style="animation-delay: {{ loop.index0 * 0.1 }}s;">
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <div>
+                                                    <div class="text-warning mb-1">
+                                                        {% for _ in range(r.stars) %}⭐{% endfor %}
+                                                    </div>
+                                                    <h5 class="h6 fw-bold mb-0 text-dark">{{ r.reviewer_name }}</h5>
+                                                    <p class="small text-muted mb-0 fw-medium">{{ r.reviewer_role or 'Verified Client' }}</p>
+                                                </div>
+                                                <form method="post" action="/dashboard/ratings/{{ r.id }}/delete" onsubmit="return confirm('Delete this verified review?');">
+                                                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                                    <button type="submit" class="btn btn-link text-danger p-0 border-0" style="font-size: 0.8rem; text-decoration: none;">🗑 Delete</button>
+                                                </form>
+                                            </div>
+                                            <p class="mb-0 small text-dark mt-2 fst-italic" style="line-height: 1.6;">"{{ r.testimonial }}"</p>
+                                            <div class="text-end mt-2">
+                                                <span class="badge bg-success bg-opacity-10 text-success fw-bold p-2 px-3 rounded-pill" style="font-size: 0.65rem; border: 1px solid rgba(16,185,129,0.2);">✓ Verified Review • {{ r.created_at.strftime("%b %d, %Y") }}</span>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+
+                                        {% if not ratings %}
+                                        <div class="text-center py-5 glass-card border-dashed">
+                                            <div class="mb-3" style="font-size: 3rem; opacity: 0.5;">💬</div>
+                                            <h4 class="h5 fw-bold mb-1 lang-text" data-en="No Testimonials Yet" data-am="እስካሁን ምንም አስተያየት አልተገኘም">No Testimonials Yet</h4>
+                                            <p class="text-muted small lang-text" data-en="When satisfied clients leave a review via your secret link, they will appear here automatically." data-am="ረክተው ደንበኞችዎ በሚስጥር ሊንክዎ አስተያየት ሲሰጡ እዚህ በራስ ሰር ይታያሉ።">
+                                                When satisfied clients leave a review via your secret link, they will appear here automatically.
+                                            </p>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>

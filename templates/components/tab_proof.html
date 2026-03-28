@@ -1,0 +1,198 @@
+                    <div class="tab-pane fade {% if request.query_params.get('proof') %}show active{% endif %}"
+                        id="pills-proof" role="tabpanel">
+                        <div class="glass-card p-4 p-md-5">
+
+                            <!-- Tab Header -->
+                            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-5 pb-3 border-bottom border-light gap-3">
+                                <div>
+                                    <h2 class="h3 fw-bold mb-1 lang-text" data-en="Portfolio" data-am="ፖርትፎሊዮ">Portfolio</h2>
+                                    <p class="text-muted mb-0 small lang-text"
+                                        data-en="Your verifiable proof of work, visible on your public page."
+                                        data-am="በህዝብ ገጽዎ ላይ የሚታዩ ሊረጋገጡ የሚችሉ ስራዎች።">Your verifiable proof of work, visible on your public page.</p>
+                                </div>
+                                {% if proof_items %}
+                                <button type="button" class="btn btn-primary btn-sm rounded-pill px-4 shadow-sm flex-shrink-0 lang-text"
+                                    id="addProjectHeaderBtn"
+                                    data-en="+ Add Project" data-am="+ ስራ ያክሉ"
+                                    onclick="toggleProofForm(true)">+ Add Project</button>
+                                {% endif %}
+                            </div>
+
+                            <!-- Success flash -->
+                            {% if request.query_params.get("proof") == "1" %}
+                            <div class="alert d-flex align-items-center gap-2 border-0 mb-4"
+                                style="background: rgba(16,185,129,0.1); color: #047857; border-radius: var(--pp-rad-md);">
+                                <span class="fs-5">🎉</span>
+                                <span class="lang-text" data-en="Project published successfully!" data-am="ስራው በተሳካ ሁኔታ ታትሟል!">Project published successfully!</span>
+                            </div>
+                            {% endif %}
+
+                            <!-- ── EMPTY STATE ── -->
+                            {% if not proof_items %}
+                            <div id="proofEmptyState" class="text-center py-5 {% if request.query_params.get('proof') == 'add' %}d-none{% endif %}">
+                                <div class="mb-4" style="font-size: 4rem; line-height: 1;">📁</div>
+                                <h3 class="fw-bold mb-2 lang-text" data-en="No projects yet" data-am="ምንም ስራ የለም">No projects yet</h3>
+                                <p class="text-muted mb-4 lang-text" style="max-width: 380px; margin: 0 auto;"
+                                    data-en="Add your first project to start building a portfolio that wins clients."
+                                    data-am="ደንበኞችን ለማሸነፍ የሚያስችል ፖርትፎሊዮ ለመገንባት የመጀመሪያ ስራዎን ያክሉ።">
+                                    Add your first project to start building a portfolio that wins clients.
+                                </p>
+                                <button type="button" class="btn btn-primary rounded-pill px-5 shadow-lg lang-text"
+                                    data-en="＋ Add your first project" data-am="＋ የመጀመሪያ ስራዎን ያክሉ"
+                                    onclick="toggleProofForm(true)">＋ Add your first project</button>
+                            </div>
+                            {% else %}
+
+                            <!-- ── PROJECT LIST ── -->
+                            <div id="proofList" class="d-flex flex-column gap-3 mb-4">
+                                {% for item in proof_items %}
+                                <div class="pp-proof-card p-4 rounded-4 position-relative overflow-hidden"
+                                    style="background: rgba(255,255,255,0.8); border: 1px solid var(--pp-border-strong); transition: transform 0.2s, box-shadow 0.2s;">
+                                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
+                                        <div class="flex-grow-1 pe-md-3">
+                                            <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                                                <span class="badge badge-creative rounded-pill py-1 px-3 text-uppercase" style="font-size: 0.68rem; letter-spacing: 0.06em;">{{ item.category }}</span>
+                                                {% if item.client_name %}
+                                                <span class="small text-muted fw-medium">— {{ item.client_name }}</span>
+                                                {% endif %}
+                                                <span class="small text-muted ms-auto pe-4">{{ item.created_at.strftime("%b %d, %Y") }}</span>
+                                            </div>
+                                            <!-- Kebab Menu -->
+                                            <div class="dropdown position-absolute top-0 end-0 mt-3 me-3">
+                                                <button class="btn btn-sm btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="background:transparent; font-size: 1.2rem; cursor: pointer;">
+                                                    ⋮
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" style="border-radius: var(--pp-rad-sm);">
+                                                    <li>
+                                                        <button class="dropdown-item small edit-proof-btn" 
+                                                            data-proof="{{ {'id': item.id, 'title': item.title, 'client_name': item.client_name, 'category': item.category, 'summary': item.summary, 'result_metric': item.result_metric, 'proof_url': item.proof_url, 'image_url': item.image_url, 'verification_note': item.verification_note} | tojson | forceescape }}"
+                                                            onclick="editProofItem(JSON.parse(this.getAttribute('data-proof')))">✏️ Edit Project</button>
+                                                    </li>
+                                                    <li>
+                                                        <form method="post" action="/dashboard/proof/{{ item.id }}/delete" onsubmit="return confirm('Are you sure you want to delete this project?');">
+                                                            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                                            <button class="dropdown-item text-danger small" type="submit">🗑 Delete</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <h5 class="fw-bold text-dark mb-1 pe-4">{{ item.title }}</h5>
+                                            <p class="text-muted small mb-0" style="line-height: 1.55;">{{ item.summary }}</p>
+                                            {% if item.proof_url %}
+                                            <a href="{{ item.proof_url }}" target="_blank" rel="noopener"
+                                                class="small fw-semibold mt-2 d-inline-flex align-items-center gap-1 text-decoration-none"
+                                                style="color: var(--pp-brand-1);">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                                View proof
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                        {% if item.result_metric %}
+                                        <div class="flex-shrink-0 text-center pe-4 mt-3 mt-md-0">
+                                            <span class="badge px-3 py-2 rounded-pill fs-6 shadow-sm"
+                                                style="background: var(--pp-gradient-main); color: var(--pp-ink-dark); white-space: nowrap;">{{ item.result_metric }}</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+
+                            <!-- ── ADD/EDIT FORM (hidden by default, shown on toggle) ── -->
+                            <div id="proofFormWrapper" class="{% if not request.query_params.get('proof') == 'add' and proof_items %}d-none{% endif %}">
+                                {% if proof_items %}
+                                <div class="d-flex align-items-center justify-content-between mb-4 pt-4 border-top border-light">
+                                    <h3 class="h5 fw-bold mb-0 lang-text" id="proofFormTitle" data-en="Add New Project" data-am="አዲስ ስራ ያክሉ">Add New Project</h3>
+                                    <button type="button" class="btn btn-sm btn-white rounded-pill px-3 border"
+                                        onclick="toggleProofForm(false)">✕ Cancel</button>
+                                </div>
+                                {% endif %}
+                                <form method="post" action="/dashboard/proof" id="proofForm">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold lang-text" data-en="Project Title" data-am="የፕሮጀክት ርዕስ">Project Title</label>
+                                            <input name="title" id="proof_title" type="text" class="form-control" required
+                                                placeholder="e.g., Brand Identity Redesign">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold lang-text" data-en="Client / Brand" data-am="ደንበኛ / ብራንድ">Client / Brand</label>
+                                            <input name="client_name" id="proof_client_name" type="text" class="form-control"
+                                                placeholder="e.g., Acme Corp (optional)">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold lang-text" data-en="Category" data-am="ምድብ">Category</label>
+                                            <select name="category" id="proof_category" class="form-select">
+                                                <option value="campaign">Campaign</option>
+                                                <option value="design">Design</option>
+                                                <option value="video">Video</option>
+                                                <option value="service">Service</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold lang-text" data-en="Result Metric" data-am="ውጤት">Result Metric</label>
+                                            <input name="result_metric" id="proof_result_metric" type="text"
+                                                placeholder="e.g., +40% Conversion, $5K ROI"
+                                                class="form-control fw-semibold" style="color: var(--pp-brand-1);">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold lang-text" data-en="Impact Summary" data-am="ተጽዕኖ ማጠቃለያ">Impact Summary</label>
+                                            <textarea name="summary" id="proof_summary" rows="4" class="form-control" required
+                                                placeholder="Describe the challenge and your creative solution..."></textarea>
+                                        </div>
+                                    </div>
+
+                                    <h3 class="h5 fw-bold mt-5 mb-4 lang-text" data-en="Evidence Links" data-am="ማስረጃ ሊንኮች">Evidence Links</h3>
+                                    <div class="row g-4">
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold lang-text" data-en="Live Link / Proof URL" data-am="ቀጥታ ሊንክ">Live Link / Proof URL</label>
+                                            <input name="proof_url" id="proof_url" type="url" placeholder="https://..."
+                                                class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label fw-semibold lang-text" data-en="Cover Image URL" data-am="የሽፋን ምስል ሊንክ">Cover Image URL</label>
+                                            <input name="image_url" id="proof_image_url" type="url" placeholder="https://..."
+                                                class="form-control">
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label fw-semibold lang-text" data-en="Verification Note (Optional)" data-am="የማረጋገጫ ማስታወሻ">Verification Note (Optional)</label>
+                                            <input name="verification_note" id="proof_verification_note" type="text"
+                                                placeholder="e.g., Verified by live traffic data..." class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="mt-5 pt-4 border-top border-light d-flex justify-content-end">
+                                        <button type="submit" id="proofSubmitBtn" class="btn btn-primary px-5 shadow-lg lang-text"
+                                            data-en="Publish Project" data-am="ስራውን አትም">Publish Project</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <script>
+                        function editProofItem(item) {
+                            toggleProofForm(true);
+                            
+                            document.getElementById('proofFormTitle').textContent = "Edit Project";
+                            const submitBtn = document.getElementById('proofSubmitBtn');
+                            submitBtn.textContent = "Save Changes";
+                            submitBtn.setAttribute('data-en', 'Save Changes');
+                            
+                            const form = document.getElementById('proofForm');
+                            form.action = "/dashboard/proof/" + item.id + "/edit";
+                            
+                            document.getElementById('proof_title').value = item.title || '';
+                            document.getElementById('proof_client_name').value = item.client_name || '';
+                            document.getElementById('proof_category').value = item.category || 'campaign';
+                            document.getElementById('proof_result_metric').value = item.result_metric || '';
+                            document.getElementById('proof_summary').value = item.summary || '';
+                            document.getElementById('proof_url').value = item.proof_url || '';
+                            document.getElementById('proof_image_url').value = item.image_url || '';
+                            document.getElementById('proof_verification_note').value = item.verification_note || '';
+                            
+                            document.getElementById('proofFormWrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    </script>

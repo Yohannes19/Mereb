@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+{% block title %}Admin Control Center | ProofPage{% endblock %}
+{% block body %}
+<!-- Admin Dark Ambient Background -->
+<div class="ambient-bg" style="background: #09090b;">
+    <div class="ambient-orb ambient-orb-1" style="opacity: 0.1; background: radial-gradient(circle, rgba(255,50,50,0.15) 0%, rgba(0,0,0,0) 70%);"></div>
+    <div class="ambient-orb ambient-orb-2" style="opacity: 0.1; background: radial-gradient(circle, rgba(50,150,255,0.15) 0%, rgba(0,0,0,0) 70%);"></div>
+</div>
+
+<div class="min-vh-100 d-flex flex-column" style="color: #FAFAFC;">
+    <!-- Admin Navbar -->
+    <nav class="pp-navbar" style="background: rgba(9, 9, 11, 0.9); border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <div class="pp-navbar-inner">
+            <div class="d-flex align-items-center gap-3">
+                <div class="pp-logo-img" style="width:36px;height:36px; box-shadow: 0 4px 14px rgba(255, 50, 50, 0.4);">
+                    <img src="/static/icons/icon-512.png" alt="Mereb logo" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                    <span class="pp-logo-fallback" style="background: #FF3B30;">M</span>
+                </div>
+                <div>
+                    <span class="fs-5 fw-bold text-white d-block" style="line-height:1;">Admin Command</span>
+                    <span class="small" style="color: #A1A1AA; font-size: 0.75rem;">God Mode Active</span>
+                </div>
+            </div>
+            
+            <div class="d-flex align-items-center gap-3">
+                <a href="/dashboard" class="btn btn-sm btn-outline-light rounded-pill px-3">Return to User Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container py-5 fade-in-up stagger-1">
+        
+        <!-- Metrics -->
+        <h2 class="h3 fw-bold mb-4 text-white">Platform Health</h2>
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="glass-card p-4 h-100" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                    <p class="text-uppercase small fw-bold mb-2" style="color: #A1A1AA; letter-spacing: 0.1em;">Total Users</p>
+                    <h3 class="display-4 fw-bold text-white mb-0">{{ all_profiles|length }}</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card p-4 h-100" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                    <p class="text-uppercase small fw-bold mb-2" style="color: #A1A1AA; letter-spacing: 0.1em;">Total Portfolios (Proofs)</p>
+                    <h3 class="display-4 fw-bold text-white mb-0">{{ all_proofs|length }}</h3>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card p-4 h-100" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                    <p class="text-uppercase small fw-bold mb-2" style="color: #A1A1AA; letter-spacing: 0.1em;">Total Testimonials</p>
+                    <h3 class="display-4 fw-bold text-white mb-0">{{ all_ratings|length }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Management Tabs -->
+        <ul class="nav nav-pills mb-4 gap-2" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active rounded-pill px-4" data-bs-toggle="tab" data-bs-target="#users" type="button" style="color:#FAFAFC; background: rgba(255,255,255,0.1);">Users List</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link rounded-pill px-4" data-bs-toggle="tab" data-bs-target="#proofs" type="button" style="color:#A1A1AA;">Proofs Feed</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link rounded-pill px-4" data-bs-toggle="tab" data-bs-target="#ratings" type="button" style="color:#A1A1AA;">Ratings Feed</button>
+            </li>
+        </ul>
+        
+        <style>
+            #adminTabs .nav-link.active {
+                background: #FAFAFC !important;
+                color: #09090B !important;
+                font-weight: 600;
+            }
+        </style>
+
+        <div class="tab-content" id="adminTabsContent">
+            <!-- Users Tab -->
+            <div class="tab-pane fade show active" id="users" role="tabpanel">
+                <div class="glass-card p-0 overflow-hidden" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0 align-middle" style="background: transparent;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid rgba(255,255,255,0.1);">
+                                    <th class="py-3 px-4 text-uppercase small" style="color: #A1A1AA;">ID</th>
+                                    <th class="py-3 px-4 text-uppercase small" style="color: #A1A1AA;">Name / Email</th>
+                                    <th class="py-3 px-4 text-uppercase small" style="color: #A1A1AA;">Metrics</th>
+                                    <th class="py-3 px-4 text-uppercase small" style="color: #A1A1AA;">Role</th>
+                                    <th class="py-3 px-4 text-uppercase small text-end" style="color: #A1A1AA;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in all_profiles %}
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                    <td class="px-4 py-3" style="color: #A1A1AA;">#{{ user.id }}</td>
+                                    <td class="px-4 py-3">
+                                        <div class="fw-bold text-white">{{ user.display_name }}</div>
+                                        <div class="small" style="color: #A1A1AA;">{{ user.email }}</div>
+                                    </td>
+                                    <td class="px-4 py-3 small">
+                                        {{ user.proof_items|length }} proofs<br>
+                                        {{ user.ratings|length }} ratings
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        {% if user.is_admin %}
+                                        <span class="badge" style="background: #DC2626; color: white;">Admin</span>
+                                        {% else %}
+                                        <span class="badge" style="background: rgba(255,255,255,0.1); color: #A1A1AA;">User</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-4 py-3 text-end">
+                                        <a href="/p/{{ user.slug }}" class="btn btn-sm btn-outline-light rounded-pill px-3" target="_blank">View</a>
+                                        {% if not user.is_admin %}
+                                        <form method="post" action="/admin/users/{{ user.id }}/delete" class="d-inline" onsubmit="return confirm('WARNING: This will obliterate this user and all their data forever. Are you absolutely sure?');">
+                                            <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3 ms-1">Delete</button>
+                                        </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proofs Tab -->
+            <div class="tab-pane fade" id="proofs" role="tabpanel">
+                <div class="row g-4">
+                    {% for proof in all_proofs %}
+                    <div class="col-md-6">
+                        <div class="glass-card p-4 h-100 position-relative" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="badge rounded-pill" style="background: rgba(255,255,255,0.1); color: #A1A1AA;">Profile ID: {{ proof.profile_id }}</span>
+                                <form method="post" action="/admin/proofs/{{ proof.id }}/delete" onsubmit="return confirm('Delete this proof item globally?');">
+                                    <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3 py-1">Delete</button>
+                                </form>
+                            </div>
+                            <h5 class="fw-bold text-white mb-1">{{ proof.title }}</h5>
+                            <p class="small mb-2" style="color: var(--pp-brand-2);">{{ proof.category }}</p>
+                            <p class="text-white opacity-75 small">{{ proof.summary[:150] }}...</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Ratings Tab -->
+            <div class="tab-pane fade" id="ratings" role="tabpanel">
+                <div class="row g-4">
+                    {% for rating in all_ratings %}
+                    <div class="col-md-6">
+                        <div class="glass-card p-4 h-100 position-relative" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <span class="badge rounded-pill" style="background: rgba(255,255,255,0.1); color: #A1A1AA;">Profile ID: {{ rating.profile_id }}</span>
+                                <form method="post" action="/admin/ratings/{{ rating.id }}/delete" onsubmit="return confirm('Delete this rating globally?');">
+                                    <button type="submit" class="btn btn-sm btn-danger rounded-pill px-3 py-1">Delete</button>
+                                </form>
+                            </div>
+                            <div class="text-warning mb-2">
+                                {% for i in range(rating.stars) %}★{% endfor %}
+                            </div>
+                            <p class="text-white fst-italic small mb-2">"{{ rating.testimonial }}"</p>
+                            <p class="small fw-bold mb-0" style="color: #A1A1AA;">— {{ rating.reviewer_name }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </div>
+    </main>
+</div>
+{% endblock %}

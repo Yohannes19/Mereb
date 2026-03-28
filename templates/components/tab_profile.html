@@ -1,0 +1,189 @@
+<div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+    <!-- Profile View Mode -->
+    <div id="profileView"
+        class="glass-card p-4 p-md-5 mb-4 fade-in-up {% if not profile.bio and not profile.tagline and not request.query_params.get('profile') == '1' %}d-none{% endif %}">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start mb-5 gap-4">
+            <div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4">
+                <!-- Avatar Display -->
+                <div class="position-relative">
+                    {% if profile.profile_image_url %}
+                    <div class="profile-avatar-lg" style="background-image: url('{{ profile.profile_image_url }}');"></div>
+                    {% else %}
+                    <div class="profile-avatar-lg profile-avatar-placeholder">
+                        {{ profile.display_name[0]|upper }}
+                    </div>
+                    {% endif %}
+                    <span class="position-absolute bottom-0 end-0 bg-success border border-white border-2 rounded-circle" style="width: 18px; height: 18px;" title="Online"></span>
+                </div>
+
+                <div class="text-center text-md-start">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2 mb-2">
+                        <h1 class="h3 fw-bold mb-0 text-dark">{{ profile.display_name }}</h1>
+                        <span class="badge badge-creative rounded-pill small">{{ profile.profile_type or 'CREATOR' }}</span>
+                    </div>
+                    <p class="text-muted mb-3 fw-medium">@{{ profile.slug or 'username' }}</p>
+                    <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-2">
+                        <span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill small">📍 {{ profile.country }}</span>
+                        {% if profile.niche %}<span class="badge bg-white text-dark shadow-sm border px-3 py-2 rounded-pill small">🎯 {{ profile.niche }}</span>{% endif %}
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary rounded-pill px-4 shadow-sm lang-text"
+                onclick="document.getElementById('profileView').classList.add('d-none'); document.getElementById('profileEdit').classList.remove('d-none');"
+                data-en="Edit Profile" data-am="መገለጫ አድስ">
+                Edit Profile
+            </button>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="p-4 rounded-4 h-100"
+                    style="background: rgba(0,0,0,0.02); border: 1px solid var(--pp-border);">
+                    <p class="small text-muted text-uppercase fw-bold mb-3 lang-text"
+                        data-en="About Me" data-am="ስለ እኔ">About Me</p>
+                    <p class="fw-bold mb-2 text-dark">{{ profile.tagline or 'No tagline set.' }}</p>
+                    <p class="text-muted small mb-0" style="line-height: 1.6;">{{ profile.bio or 'Your professional bio will appear here.' }}</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-4 rounded-4 h-100"
+                    style="background: rgba(0,0,0,0.02); border: 1px solid var(--pp-border);">
+                    <p class="small text-muted text-uppercase fw-bold mb-3 lang-text"
+                        data-en="Online Presence" data-am="ማህበራዊ ትስስር">Online Presence</p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        {% if profile.website_url %}
+                        <a href="{{ profile.website_url }}" target="_blank" class="badge bg-white text-dark shadow-sm border text-decoration-none px-3 py-2 fs-6 rounded-pill d-flex align-items-center gap-2">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            Website
+                        </a>
+                        {% endif %}
+                        {% if profile.instagram_handle %}
+                        <span class="badge bg-white text-dark shadow-sm border px-3 py-2 fs-6 rounded-pill d-flex align-items-center gap-2">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                            {{ profile.instagram_handle }}
+                        </span>
+                        {% endif %}
+                        {% if profile.tiktok_handle %}
+                        <span class="badge bg-white text-dark shadow-sm border px-3 py-2 fs-6 rounded-pill d-flex align-items-center gap-2">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+                            {{ profile.tiktok_handle }}
+                        </span>
+                        {% endif %}
+                        {% if profile.telegram_handle %}
+                        <span class="badge bg-white text-dark shadow-sm border px-3 py-2 fs-6 rounded-pill d-flex align-items-center gap-2">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                            {{ profile.telegram_handle }}
+                        </span>
+                        {% endif %}
+                        {% if not profile.website_url and not profile.instagram_handle and not profile.tiktok_handle and not profile.telegram_handle %}
+                        <span class="text-muted">No social links added.</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Mode (Form) -->
+    <div id="profileEdit"
+        class="glass-card p-4 p-md-5 fade-in-up {% if profile.bio or profile.tagline or request.query_params.get('profile') == '1' %}d-none{% endif %}">
+        <div
+            class="d-flex justify-content-between align-items-center mb-5 pb-3 border-bottom border-light">
+            <div>
+                <h2 class="h3 fw-bold mb-1 lang-text" data-en="Edit Profile" data-am="መገለጫ ያስተካክሉ">
+                    Edit Profile</h2>
+                <p class="text-muted mb-0 lang-text"
+                    data-en="Customize how you appear on your stunning public page."
+                    data-am="በህዝብ ገፅዎ ላይ እንዴት እንደሚታዩ ያስተካክሉ።">Customize how you appear on your
+                    stunning public page.
+                </p>
+            </div>
+            <button type="button" class="btn btn-white btn-sm rounded-pill px-4 shadow-sm lang-text"
+                onclick="document.getElementById('profileEdit').classList.add('d-none'); document.getElementById('profileView').classList.remove('d-none');"
+                data-en="Cancel" data-am="ሰርዝ">
+                Cancel
+            </button>
+        </div>
+
+        <form method="post" action="/dashboard/profile">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <div class="row g-4">
+                <div class="col-12">
+                    <label class="form-label fw-bold">Profile Photo URL</label>
+                    <input name="profile_image_url" type="url" class="form-control" 
+                        placeholder="https://example.com/photo.jpg" value="{{ profile.profile_image_url or '' }}">
+                    <div class="form-text small">Tip: Host your photo on Imgur or Cloudinary and paste the direct link here.</div>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Display Name</label>
+                    <input name="display_name" type="text" class="form-control"
+                        value="{{ profile.display_name }}" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Profile Type</label>
+                    <select name="profile_type" class="form-select">
+                        <option value="creator" {% if profile.profile_type=='creator' %}selected{%
+                            endif %}>Influencer / Creator</option>
+                        <option value="freelancer" {% if profile.profile_type=='freelancer'
+                            %}selected{% endif %}>Freelancer / Expert</option>
+                        <option value="agency" {% if profile.profile_type=='agency' %}selected{%
+                            endif %}>Agency / Studio</option>
+                        <option value="business" {% if profile.profile_type=='business' %}selected{%
+                            endif %}>Small Business</option>
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Professional Tagline</label>
+                    <input name="tagline" type="text" class="form-control fw-bold"
+                        placeholder="The headline your visitors see first..."
+                        value="{{ profile.tagline or '' }}">
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Short Bio</label>
+                    <textarea name="bio" rows="4" class="form-control"
+                        placeholder="Briefly describe what makes your work amazing...">{{ profile.bio or '' }}</textarea>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">City/Region</label>
+                    <input name="city" type="text" class="form-control"
+                        value="{{ profile.city or '' }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Country</label>
+                    <input name="country" type="text" class="form-control"
+                        value="{{ profile.country }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Your Niche / Category</label>
+                    <input name="niche" type="text" class="form-control"
+                        placeholder="e.g. Video Production, Tech Review"
+                        value="{{ profile.niche or '' }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Instagram (@handle)</label>
+                    <input name="instagram_handle" type="text" class="form-control"
+                        value="{{ profile.instagram_handle or '' }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">TikTok (@handle)</label>
+                    <input name="tiktok_handle" type="text" class="form-control"
+                        value="{{ profile.tiktok_handle or '' }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Telegram (@handle)</label>
+                    <input name="telegram_handle" type="text" class="form-control"
+                        value="{{ profile.telegram_handle or '' }}">
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Personal Website URL</label>
+                    <input name="website_url" type="url" class="form-control"
+                        value="{{ profile.website_url or '' }}">
+                </div>
+            </div>
+            <div class="mt-5 pt-3 border-top d-flex gap-3">
+                <button type="submit" class="btn btn-primary rounded-pill px-5 shadow-lg lang-text"
+                    data-en="Save Changes" data-am="ለውጦችን አስቀምጥ">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>

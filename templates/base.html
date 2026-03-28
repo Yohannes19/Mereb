@@ -4,9 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#6e56ff">
+    <meta name="description" content="{% block description %}Mereb - Professional proof profiles for Ethiopian creators and small businesses. Show your work, get verified reviews, and win clients.{% endblock %}">
+    <meta name="keywords" content="Portfolio, Ethiopian Creators, Proof of Work, Testimonials, Mereb, SaaS">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:title" content="{% block og_title %}Mereb | Your Professional ProofPage{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Showcase your verified work and client testimonials in one stunning profile.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}/static/icons/icon-512.png{% endblock %}">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ request.url }}">
+    <meta property="twitter:title" content="{% block twitter_title %}Mereb | Your Professional ProofPage{% endblock %}">
+    <meta property="twitter:description" content="{% block twitter_description %}Showcase your verified work and client testimonials in one stunning profile.{% endblock %}">
+    <meta property="twitter:image" content="{% block twitter_image %}/static/icons/icon-512.png{% endblock %}">
+
     <link rel="manifest" href="/static/manifest.json">
     <link rel="apple-touch-icon" href="/static/icons/icon-512.png">
+    <link rel="icon" type="image/png" href="/static/icons/icon-192.png">
+
     <title>{% block title %}Mereb{% endblock %}</title>
+
+    {% block extra_head %}{% endblock %}
+    
+    {% block analytics %}{% endblock %}
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

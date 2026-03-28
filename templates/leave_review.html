@@ -1,16 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Leave a Review for {{ profile.display_name }} | ProofPage{% endblock %}
 {% block body %}
-<!-- Ambient Dynamic Background -->
-<div class="ambient-bg" style="background: #FAFAFC;">
-    <div class="ambient-orb ambient-orb-1" style="opacity: 0.25;"></div>
-    <div class="ambient-orb ambient-orb-2" style="opacity: 0.15;"></div>
-</div>
+{% include "components/ambient_bg.html" %}
 
 <main class="min-vh-100 d-flex flex-column justify-content-center py-5 position-relative">
-    <div class="position-absolute p-3 p-md-4 z-3" style="top: 0; right: 0;">
-        <button class="btn btn-sm btn-white rounded-pill px-3 shadow-sm lang-toggle-btn border" onclick="toggleLanguage()" style="font-size: 0.85rem; font-weight: bold;">🇪🇹 አማርኛ</button>
-    </div>
+    {% include "components/lang_toggle.html" %}
     <div class="container" style="max-width: 650px;">
         
         <div class="text-center mb-5 fade-in-up stagger-1">
@@ -38,6 +32,7 @@
             {% else %}
             
             <form method="post" action="/p/{{ profile.slug }}/review">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <div class="row g-4">
                     <div class="col-md-6">
                         <label class="form-label fw-semibold lang-text" data-en="Your Full Name" data-am="ሙሉ ስምዎ">Your Full Name</label>

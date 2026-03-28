@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
-from sqlalchemy import DateTime, ForeignKey, Integer, String, Text
+from sqlalchemy import DateTime, ForeignKey, Integer, String, Text, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -17,6 +17,7 @@ class Profile(Base):
 
     id: Mapped[str] = mapped_column(String(36), primary_key=True, default=new_uuid)
     display_name: Mapped[str] = mapped_column(String(255))
+    is_admin: Mapped[bool] = mapped_column(Boolean, default=False)
     email: Mapped[str] = mapped_column(String(255), unique=True, index=True)
     password_hash: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     api_key: Mapped[str] = mapped_column(String(64), unique=True, index=True)
@@ -32,6 +33,7 @@ class Profile(Base):
     telegram_handle: Mapped[Optional[str]] = mapped_column(String(120), nullable=True)
     website_url: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     view_count: Mapped[int] = mapped_column(Integer, default=0)
+    profile_image_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     proof_items: Mapped[list["ProofItem"]] = relationship(back_populates="profile", cascade="all, delete-orphan")
