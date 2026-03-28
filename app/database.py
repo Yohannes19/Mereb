@@ -4,13 +4,13 @@ from collections.abc import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
-# On Vercel, the filesystem is read-only. If no DATABASE_URL is set, use /tmp to prevent startup crash.
-if os.environ.get("VERCEL"):
-    default_url = "sqlite:////tmp/mvp.db"
-else:
-    default_url = "sqlite:///./mvp.db"
+TURSO_DATABASE_URL = os.getenv("TURSO_DATABASE_URL")
+TURSO_AUTH_TOKEN = os.getenv("TURSO_AUTH_TOKEN")
 
-DATABASE_URL = os.getenv("DATABASE_URL", default_url)
+if TURSO_DATABASE_URL and TURSO_AUTH_TOKEN:
+    DATABASE_URL = f"{TURSO_DATABASE_URL}?authToken={TURSO_AUTH_TOKEN}"
+else:
+    DATABASE_URL = "sqlite:///./mvp.db"
 
 connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
 

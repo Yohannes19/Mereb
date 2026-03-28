@@ -9,6 +9,8 @@ from starlette.middleware.sessions import SessionMiddleware
 
 from app import models, schemas, services
 from app.database import Base, engine, get_db
+import os
+
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,10 +28,8 @@ app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 @app.on_event("startup")
 def on_startup():
-    # Only create tables if we are not in a test (though TestClient usually respects overrides)
-    # This is a safety measure for the production engine
-    from app.database import engine
-    Base.metadata.create_all(bind=engine)
+    if os.getenv("ENV") == "dev":
+        Base.metadata.create_all(bind=engine)
 
 
 def proof_response(item: models.ProofItem) -> schemas.ProofItemResponse:
