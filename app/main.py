@@ -28,8 +28,7 @@ app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 @app.on_event("startup")
 def on_startup():
-    if os.getenv("ENV") == "dev":
-        Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
 
 
 def proof_response(item: models.ProofItem) -> schemas.ProofItemResponse:
