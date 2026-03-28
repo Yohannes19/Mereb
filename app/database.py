@@ -6,6 +6,8 @@ from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
 TURSO_DATABASE_URL = os.getenv("TURSO_DATABASE_URL")
 TURSO_AUTH_TOKEN = os.getenv("TURSO_AUTH_TOKEN")
+print("DB URL:", TURSO_DATABASE_URL)
+print("TOKEN:", TURSO_AUTH_TOKEN)
 
 if TURSO_DATABASE_URL and TURSO_AUTH_TOKEN:
     DATABASE_URL = f"{TURSO_DATABASE_URL}?authToken={TURSO_AUTH_TOKEN}"
