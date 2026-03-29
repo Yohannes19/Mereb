@@ -80,33 +80,27 @@ def robots_txt():
 @app.get("/sitemap.xml")
 def sitemap_xml(db: Session = Depends(get_db)):
     """
-    Dynamically generates sitemap.xml listing all public profiles.
-    Ensures 0 discovery errors in Google Search Console.
+    Generates sitemap.xml for the main parts of the website only.
+    Resolves "Couldn't fetch" error in GSC by ensuring valid structure and media type.
     """
     try:
-        profiles = db.query(models.Profile).all()
         now_date = datetime.date.today().strftime('%Y-%m-%d')
-        
         xml_items = []
+        
         # 1. Main Landing Page
         xml_items.append(f'<url><loc>https://mereb.info/</loc><lastmod>{now_date}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>')
         
-        # 2. Dynamic Creator Profiles
-        for p in profiles:
-            if not p.slug: continue
+        # 2. Official Demo Profile (Main Part of Web)
+        demo = db.query(models.Profile).filter_by(slug="muna-studio").first()
+        if demo:
+            lmod = demo.created_at.strftime('%Y-%m-%d') if demo.created_at else now_date
+            xml_items.append(f'<url><loc>https://mereb.info/p/muna-studio</loc><lastmod>{lmod}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>')
             
-            # Use profile.updated_at if it exists, otherwise use today's date (fixes 500 error)
-            lmod = p.updated_at.strftime('%Y-%m-%d') if p.updated_at else now_date
-            
-            xml_items.append(f'<url><loc>https://mereb.info/p/{p.slug}</loc><lastmod>{lmod}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>')
-            
-        # Minified XML string (GSC prefers no whitespace/indents in sitemaps)
         xml_str = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(xml_items) + '</urlset>'
-        
-        return Response(content=xml_str.lstrip(), media_type="application/xml; charset=utf-8")
+        return Response(content=xml_str, media_type="application/xml")
         
     except Exception as e:
-        # Fallback to absolute bare minimum if DB fails for any reason
+        # Absolute bare minimum fallback
         return Response(content='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://mereb.info/</loc></url></urlset>', media_type="application/xml")
 
 @app.get("/", response_class=HTMLResponse)
