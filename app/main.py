@@ -72,11 +72,11 @@ def on_startup():
 
 @app.get("/robots.txt")
 def robots_txt():
-    return FileResponse("robots.txt")
+    return FileResponse(os.path.join(BASE_DIR, "robots.txt"), media_type="text/plain")
 
 @app.get("/sitemap.xml")
 def sitemap_xml():
-    return FileResponse("sitemap.xml")
+    return FileResponse(os.path.join(BASE_DIR, "sitemap.xml"), media_type="application/xml")
 
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request, db: Session = Depends(get_db)):
