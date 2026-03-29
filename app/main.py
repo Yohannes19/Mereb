@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, Request, status
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, PlainTextResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
@@ -68,6 +68,40 @@ app.include_router(admin.router)
 @app.on_event("startup")
 def on_startup():
     Base.metadata.create_all(bind=engine)
+
+
+@app.get("/robots.txt", response_class=PlainTextResponse)
+def robots_txt():
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /dashboard/",
+        "Disallow: /admin/",
+        "Sitemap: https://mereb.info/sitemap.xml"
+    ]
+    return "\n".join(lines)
+
+@app.get("/sitemap.xml")
+def sitemap_xml(db: Session = Depends(get_db)):
+    """
+    Dynamically generates sitemap.xml listing all public profiles.
+    """
+    profiles = db.query(models.Profile).all()
+    
+    xml_items = []
+    # Add home page
+    xml_items.append("""<url><loc>https://mereb.info/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>""")
+    
+    # Add each profile
+    for p in profiles:
+        xml_items.append(f"""<url><loc>https://mereb.info/p/{p.slug}</loc><lastmod>{p.updated_at.strftime('%Y-%m-%d')}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>""")
+        
+    xml_content = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{"".join(xml_items)}
+</urlset>"""
+    
+    return Response(content=xml_content, media_type="application/xml")
 
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request, db: Session = Depends(get_db)):
