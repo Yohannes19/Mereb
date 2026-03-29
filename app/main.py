@@ -70,13 +70,44 @@ def on_startup():
     Base.metadata.create_all(bind=engine)
 
 
-@app.get("/robots.txt")
+import datetime
+
+@app.get("/robots.txt", response_class=PlainTextResponse)
 def robots_txt():
-    return FileResponse(os.path.join(BASE_DIR, "robots.txt"), media_type="text/plain")
+    # Force robots.txt as flat text to follow Google's standard
+    return "User-agent: *\nAllow: /\nDisallow: /dashboard/\nDisallow: /admin/\nSitemap: https://mereb.info/sitemap.xml"
 
 @app.get("/sitemap.xml")
-def sitemap_xml():
-    return FileResponse(os.path.join(BASE_DIR, "sitemap.xml"), media_type="application/xml")
+def sitemap_xml(db: Session = Depends(get_db)):
+    """
+    Dynamically generates sitemap.xml listing all public profiles.
+    Ensures 0 discovery errors in Google Search Console.
+    """
+    try:
+        profiles = db.query(models.Profile).all()
+        now_date = datetime.date.today().strftime('%Y-%m-%d')
+        
+        xml_items = []
+        # 1. Main Landing Page
+        xml_items.append(f'<url><loc>https://mereb.info/</loc><lastmod>{now_date}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>')
+        
+        # 2. Dynamic Creator Profiles
+        for p in profiles:
+            if not p.slug: continue
+            
+            # Use profile.updated_at if it exists, otherwise use today's date (fixes 500 error)
+            lmod = p.updated_at.strftime('%Y-%m-%d') if p.updated_at else now_date
+            
+            xml_items.append(f'<url><loc>https://mereb.info/p/{p.slug}</loc><lastmod>{lmod}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>')
+            
+        # Minified XML string (GSC prefers no whitespace/indents in sitemaps)
+        xml_str = '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + "".join(xml_items) + '</urlset>'
+        
+        return Response(content=xml_str.lstrip(), media_type="application/xml; charset=utf-8")
+        
+    except Exception as e:
+        # Fallback to absolute bare minimum if DB fails for any reason
+        return Response(content='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://mereb.info/</loc></url></urlset>', media_type="application/xml")
 
 @app.get("/", response_class=HTMLResponse)
 def index(request: Request, db: Session = Depends(get_db)):
